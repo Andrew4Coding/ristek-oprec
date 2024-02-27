@@ -3,7 +3,7 @@ import Image from "next/image"
 import { transactionItem } from "../interface"
 import { useState } from "react";
 import { EditDetailModalTransactionModal } from "./Modal/EditTransaction";
-import { Modal } from "../../../Components/Elements/Modal/Modal";
+import { Modal } from "@/components/Elements/Modal/Modal";
 import { DeleteModal } from "./Modal/DeleteModal";
 
 export const TransactionCard: React.FC<transactionItem> = ({

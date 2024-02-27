@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image"
 import { Dispatch, SetStateAction, useState } from "react"
-import { Modal } from "../../../Components/Elements/Modal/Modal";
+import { Modal } from "@/components/Elements/Modal/Modal";
 import { CreateTransactionModal } from "./Modal/CreateTransaction";
 import { filterInterface } from "./Filter";
 import { transactionData } from "../interface";

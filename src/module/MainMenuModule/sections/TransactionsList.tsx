@@ -1,7 +1,7 @@
 import { TransactionCard } from "../elements/TransactionCard"
 import { useEffect, useState } from "react"
 import { transactionData } from "../interface"
-import { LoadingSpin } from "@/Components/Elements/Loader/LoadingSpin";
+import { Modal } from "@/components/Elements/Loader/LoadingSpin";
 import { SearchBar } from "../elements/SearchBar";
 import { Filter } from "../elements/Filter";
 
