@@ -1,7 +1,8 @@
-import { Modal } from "@/components/Elements/Modal/Modal";
 import MyDatePicker from "@/components/Elements/Calendar/Calendar"; 
 
 import { useState } from "react"
+import { useRouter } from "next/navigation";
+import { LoadingSpin } from "@/components/Elements/Loader/LoadingSpin";
 
 interface createTransaction {
     name: string,
@@ -11,9 +12,13 @@ interface createTransaction {
     date: Date | null
 }
 
-export const CreateTransactionModal: React.FC = () => {
-    const [transactionType, setTransactionType] = useState('EXPENSE');
+export const CreateModal: React.FC = () => {
+    // Router
+    const router = useRouter();
 
+    // State management
+    const [transactionType, setTransactionType] = useState('EXPENSE');
+    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
     const [createTransaction, setCreateTransaction] = useState<createTransaction>({
         name: '',
         amount: 0,
@@ -21,7 +26,10 @@ export const CreateTransactionModal: React.FC = () => {
         date: new Date(),
         category: 'FOOD'
     })
-    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+
+    // IsLoading State
+    const [isLoading, setIsLoading] = useState(false);
+
     const handleDateChange = (date: Date | null) => {
         setSelectedDate(date);
         setCreateTransaction(
@@ -36,7 +44,10 @@ export const CreateTransactionModal: React.FC = () => {
         let userId = '1';
         if (typeof window !== 'undefined'){
             let userId = localStorage.getItem('userId');
-        }
+        }   
+
+        setIsLoading(true)
+
         fetch(`/api/transactions`, {
             method: 'POST',
             headers: {
@@ -49,14 +60,18 @@ export const CreateTransactionModal: React.FC = () => {
             })
         }).then(res => {
             return res.json();
-        }).then(data => {       
-            console.log(data);     
+        }).then(data => {   
             if (data.status === 'ok') {
                 setDoneCreate("ok");
             }
             else {
                 setDoneCreate("error")
             }
+            setIsLoading(false)
+
+            router.refresh;
+        }).catch(e => {
+            console.log(e)
         })
     }
 
@@ -121,7 +136,7 @@ export const CreateTransactionModal: React.FC = () => {
                     })
                 }}>
                     {
-                        ["Food", "Bills", "Transportation", "Recreational", "Health", "Technology", "Other"].map(item => {
+                        ["Food", "Bills", "Laundry", "Education", "Transportation", "Recreational", "Health", "Technology", "Other"].map(item => {
                             return (
                                 <option className="font-semibold text-black" key={item}>
                                     {item}
@@ -131,7 +146,10 @@ export const CreateTransactionModal: React.FC = () => {
                     }
                 </select>
             </div>
-            
+            {
+                isLoading && 
+                <LoadingSpin size="20" fill="#A5DD9B" className=""/>
+            }
             {
                 isDoneCreate != '' &&
                 <p className="text-xs text-center text-mainGreen font-bold">{

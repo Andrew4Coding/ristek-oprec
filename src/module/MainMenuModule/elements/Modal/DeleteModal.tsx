@@ -1,32 +1,43 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
+import { transactionData } from "../../interface"
+import { useRouter } from "next/navigation"
+import { LoadingSpin } from "@/components/Elements/Loader/LoadingSpin"
 
 interface deleteModalInterface {
     setOpenModal: Dispatch<SetStateAction<boolean>>
+    item: transactionData
 }
 
 export const DeleteModal: React.FC<deleteModalInterface> = ({
-    setOpenModal
+    setOpenModal, item
 }) => {
-    function deleteTransaction() {
-        fetch(`/api/authentication`, {
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+    
+    const deleteTransaction = async () => {
+        setIsLoading(true);
+        fetch(`/api/transactions/`, {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json', // Header yang diperlukan sesuai kebutuhan
-            },
             body: JSON.stringify({
-                id: 2
+                id: item.id
             })
         }).then(res => {
             return res.json();
         }).then(data => {
-            console.log(data);
+            setIsLoading(false);
+            router.refresh();
+        }).catch(e => {
+            console.log(e);
         })
     }
 
     return (
-        <article className="p-8 flex flex-col gap-3 bg-white h-fit w-fit border-[#CCC] border-2 rounded-3xl">
-            <h1 className="font-bold text-xl">Delete Transaction?</h1>
-            <div className="w-full flex gap-3">
+        <article className="p-8 flex flex-col items-center justify-center gap-3 bg-white h-fit w-fit border-[#CCC] border-2 rounded-sectionCorner">
+            <h1 className="font-bold text-section-title">Delete Transaction?</h1>
+            {
+                isLoading && <LoadingSpin size="20" fill="#FB7373" className=""/>
+            }
+            <div className="w-full flex gap-3 text-section-content">
                 <button
                     onClick={() => {
                         deleteTransaction();
@@ -38,7 +49,7 @@ export const DeleteModal: React.FC<deleteModalInterface> = ({
                     onClick={() => {
                         setOpenModal(false);
                     }}
-                    className="w-full border-1 border-mainGray text-mainBlue py-3 rounded-xl font-bold duration-300 hover:scale-105">
+                    className="w-full border-[0.5px] border-mainGray text-mainBlue py-3 rounded-xl font-bold duration-300 hover:scale-105">
                     Cancel
                 </button>
             </div>

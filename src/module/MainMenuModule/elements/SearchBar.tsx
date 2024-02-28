@@ -2,7 +2,7 @@
 import Image from "next/image"
 import { Dispatch, SetStateAction, useState } from "react"
 import { Modal } from "@/components/Elements/Modal/Modal";
-import { CreateTransactionModal } from "./Modal/CreateTransaction";
+import { CreateModal } from "./Modal/CreateModal";
 import { filterInterface } from "./Filter";
 import { transactionData } from "../interface";
 
@@ -22,7 +22,7 @@ export const SearchBar: React.FC<searchBar> = ({
             {
                 openModal &&
                 <Modal setState={setOpenModal}>
-                    <CreateTransactionModal />
+                    <CreateModal />
                 </Modal>
             }
             <div className="w-full rounded-md text-sm bg-mainWhiteShade p-8 py-5 gap-5 font-medium flex">

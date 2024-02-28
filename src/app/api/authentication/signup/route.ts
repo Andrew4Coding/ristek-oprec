@@ -1,4 +1,5 @@
 import { prisma } from "../../../../../prisma/prisma";
+import { getSalt } from "bcryptjs"
 
 export async function POST(req: Request) {
     try {
@@ -7,12 +8,14 @@ export async function POST(req: Request) {
         const user = await prisma.user.findUnique({
             where: {email: body.email}
         })
-    
+        
+        const hashedPassword = getSalt(body.passsword)
+
         if (!user) {
             await prisma.user.create(
                 {
                     data: {
-                        ...body
+                        ...body,
                     }
                 }
             )

@@ -49,12 +49,12 @@ export const SignIn: React.FC<authModalInterface> = ({ setState }) => {
     }
 
     return (
-        <article className="bg-white border-2 border-[#CCC] rounded-2xl p-10 flex flex-col gap-5 w-[25rem]">
-            <h2 className="font-bold text-3xl">
+        <article className="bg-white shadow-sectionShadow rounded-sectionCorner p-10 flex flex-col gap-5 w-[25rem]">
+            <h2 className="font-bold text-big-title">
                 Sign In
             </h2>
 
-            <input type="email" className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] p-5 font-medium border-[1px] border-[#CCC]" placeholder="Email"
+            <input type="email" className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] p-5 font-medium" placeholder="Email"
                 onChange={(e) => {
                     setUserSignData({
                         ...userSignData,
@@ -63,7 +63,7 @@ export const SignIn: React.FC<authModalInterface> = ({ setState }) => {
                 }}
             />
 
-            <div className="w-full rounded-md text-sm bg-[#F6F6F6] p-5 font-medium border-[1px] border-[#CCC] flex">
+            <div className="w-full rounded-md text-sm bg-[#F6F6F6] p-5 font-medium flex">
                 <input type={
                     isShowPassword ? "password" : "text"
                 } className="outline-none bg-[#f6f6f6] w-full" placeholder="Password"
