@@ -15,19 +15,25 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-/* 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  border-radius: 30px;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-} */
+/* Track (the area behind the scrollbar) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* You can change this color */
+}
+
+/* Handle (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+  background: #576BEA; 
+  border-radius: 30px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* You can change this color */
+}

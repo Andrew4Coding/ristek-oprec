@@ -24,7 +24,7 @@ export const TotalExpense: React.FC = () => {
             <h1 className="text-section-title">Total Expenses</h1>
             <div className="flex items-center gap-5">
                 <h3 className="text-section-title text-mainGray">RP</h3>
-                <h1 className="text-price-title font-extrabold text-mainRed">{
+                <h1 className="text-price-title font-extrabold text-mainRed max-w-full line-clamp-1 overflow-x-scroll sm:overflow-hidden">{
                    thousandSeparator(nominal.toString())
                 }</h1>
             </div>

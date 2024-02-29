@@ -23,7 +23,7 @@ export const EditModal: React.FC<{
     // State management
     const [transactionType, setTransactionType] = useState(item.type);
     const [selectedDate, setSelectedDate] = useState<Date | null>(item.date);
-    const [createTransaction, setCreateTransaction] = useState<editTransaction>({
+    const [EditTransaction, setEditTransaction] = useState<editTransaction>({
         id: item.id,
         name: item.name,
         amount: item.amount,
@@ -38,9 +38,9 @@ export const EditModal: React.FC<{
 
     const handleDateChange = (date: Date | null) => {
         setSelectedDate(date);
-        setCreateTransaction(
+        setEditTransaction(
             {
-                ... createTransaction,
+                ... EditTransaction,
                 date: date
             }
         )
@@ -60,7 +60,7 @@ export const EditModal: React.FC<{
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify({
-                ...createTransaction,
+                ...EditTransaction,
                 type: transactionType,
                 id: item.id
             })
@@ -68,20 +68,20 @@ export const EditModal: React.FC<{
             return res.json();
         }).then(data => {   
             if (data.status === 'ok') {
-                setDoneCreate("ok");
+                setDoneEdit("ok");
+                setOpenModal(false);   
             }
             else {
-                setDoneCreate("error")
+                setDoneEdit("error")
             }
             setIsLoading(false)
 
-            router.refresh;
         }).catch(e => {
             console.log(e)
         })
     }
 
-    const [isDoneCreate, setDoneCreate] = useState('');
+    const [isDoneEdit, setDoneEdit] = useState('');
 
 
     return (
@@ -103,31 +103,31 @@ export const EditModal: React.FC<{
             <form action="" className="flex flex-col gap-3">
                 <input type="text" className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] py-3 px-5 font-medium " placeholder="Title"
                     onChange={(e) => {
-                        setCreateTransaction({
-                            ...createTransaction,
+                        setEditTransaction({
+                            ...EditTransaction,
                             name: e.target.value
                         })
                     }}
-                    value={createTransaction.name}
+                    value={EditTransaction.name}
                 />
-                <input type="number" className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] py-3 px-5 font-medium " placeholder="Nominal"
+                <input type="text" className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] py-3 px-5 font-medium " placeholder="Nominal"
                     onChange={(e) => {
-                        setCreateTransaction({
-                            ...createTransaction,
+                        setEditTransaction({
+                            ...EditTransaction,
                             amount: parseInt(e.target.value)
                         })
                     }}
-                    value={createTransaction.amount}
+                    value={Number.isNaN(EditTransaction.amount) ? '' : EditTransaction.amount}
                 />
                 <textarea
                 onChange={(e) => {
-                    setCreateTransaction({
-                        ...createTransaction,
+                    setEditTransaction({
+                        ...EditTransaction,
                         description: e.target.value
                     })
                 }}
 
-                value={createTransaction.description}
+                value={EditTransaction.description}
 
                 placeholder="Description"
                 name="" id="" cols={30} rows={3} 
@@ -140,12 +140,12 @@ export const EditModal: React.FC<{
             <div className="flex gap-3 items-center font-semibold">
                 <p className="text-section-content">Category</p>
                 <select className="p-2 outline-none text-[#576BEA]  text-sm" onChange={(e) => {
-                    setCreateTransaction({
-                        ...createTransaction,
+                    setEditTransaction({
+                        ...EditTransaction,
                         category: e.target.value.toUpperCase()
                     })
                 }}
-                value={createTransaction.category}
+                value={EditTransaction.category}
                 >
                     {
                         ["Food", "Bills", "Laundry", "Education", "Transportation", "Recreational", "Health", "Technology", "Other"].map(item => {
@@ -163,9 +163,9 @@ export const EditModal: React.FC<{
                 <LoadingSpin size="20" fill="#A5DD9B" className=""/>
             }
             {
-                isDoneCreate != '' &&
+                isDoneEdit != '' &&
                 <p className="text-xs text-center text-mainGreen font-bold">{
-                    isDoneCreate === 'ok' ? "Edit Transaction Succeed!" : 'Edit Transaction Failed!'
+                    isDoneEdit === 'ok' ? "Edit Transaction Succeed!" : 'Edit Transaction Failed!'
                 }</p>
             }
 

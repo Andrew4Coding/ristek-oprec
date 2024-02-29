@@ -7,7 +7,6 @@ import { TotalExpense } from "./sections/TotalExpense";
 import { Analytics } from "./sections/Analytics";
 import { Navbar } from "./elements/Navbar";
 import { transactionData } from "./interface";
-import { json } from "stream/consumers";
 
 export const UserTransactionsContext = createContext<{
     transactionList: transactionData[] | null,
@@ -38,7 +37,6 @@ export const MainMenuModule: React.FC = () => {
         }).then(res => {
             return res.json();
         }).then(data => {
-            console.log(data);
             setIsLoading(false)
             setTransactionList(data.transactions.reverse());
             setTempFilter(data.transactions.reverse());
@@ -49,9 +47,9 @@ export const MainMenuModule: React.FC = () => {
 
     return (
         <UserTransactionsContext.Provider value={{isLoading, transactionList, tempFilter, setTempFilter}}>
-            <main className="px-10 py-10 lg:px-20 lg:py-5 w-full flex flex-col ">
+            <main className="px-5  py-10 lg:py-20 lg:pt-10 lg:px-20 w-full flex flex-col gap-5 ">
                 <Navbar />
-                <div className="w-full flex gap-8">
+                <div className="w-full  flex flex-col lg:flex-row gap-5">
                     <div className="flex-grow-0 lg:flex-grow flex flex-col gap-5">
                         <TotalExpense />
                         <TotalIncome />

@@ -33,7 +33,7 @@ export const SearchBar: React.FC<searchBar> = ({
 
                 <input type={
                     "text"
-                } className="bg-mainWhiteShade outline-none w-full text-sm" placeholder="Search transaction"
+                } className="bg-mainWhiteShade outline-none w-full text-xs lg:text-sm" placeholder="Search transaction"
                     onChange={(e) => {
                         if (state) {
                             const sorted = state.filter(item => item.name.toLowerCase().includes(e.target.value));

@@ -21,7 +21,7 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
     const [createTransaction, setCreateTransaction] = useState<createTransaction>({
         name: '',
-        amount: 0,
+        amount: NaN,
         description: '',
         date: new Date(),
         category: 'FOOD'
@@ -100,7 +100,7 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
                         })
                     }}
                 />
-                <input type="number" className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] py-3 px-5 font-medium " placeholder="Nominal"
+                <input type="text" value={Number.isNaN(createTransaction.amount) ? '' : createTransaction.amount} className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] py-3 px-5 font-medium " placeholder="Nominal"
                     onChange={(e) => {
                         setCreateTransaction({
                             ...createTransaction,

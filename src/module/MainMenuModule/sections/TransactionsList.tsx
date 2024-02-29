@@ -15,7 +15,6 @@ export const TransactionList: React.FC = () => {
     const transactionList = context?.transactionList;
 
     useEffect(() => {
-        console.log(searchFilter?.length);
         if (transactionList && tempFilter == null){
             const sorted = transactionList?.slice().sort((a, b) => {
                 const keyA = a.category;
@@ -50,7 +49,7 @@ export const TransactionList: React.FC = () => {
                     setTempFilter(
                         sorted
                     );
-                    setSearchFilter(sorted)
+                    setSearchFilter(sorted.reverse())
                 }
                 break;
             
@@ -97,16 +96,16 @@ export const TransactionList: React.FC = () => {
     }, [filterTypeIndex])
 
     return (
-        <section className="bg-white w-full lg:w-[70%] mb-20 shadow-sectionShadow rounded-sectionCorner p-8 font-Manrope text-section-title font-bold flex flex-col gap-3">
+        <section className="bg-white w-full lg:w-[70%] h-full max-h-[47rem] shadow-sectionShadow rounded-sectionCorner p-8 font-Manrope text-section-title font-bold flex flex-col gap-3">
             <h3>Transactions History</h3>
             {
                 transactionList !== undefined &&
                 <SearchBar setState={setSearchFilter} state={tempFilter} />
             }
             <Filter setState={setFilterTypeIndex} state={filterTypeIndex}/>
-            <div className="overflow-y-scroll overflow-x-hidden box-border max-h-[27rem] flex flex-col gap-3 items-center">
+            <div className="overflow-y-scroll overflow-x-hidden box-border max-w-full flex flex-col gap-3 items-center">
                 {
-                    searchFilter?.length === 0 &&
+                    transactionList?.length === 0 &&
                     <p className="text-mainGray font-medium text-section-content">No transactions, click + to add transactions</p>
                 }
                 {

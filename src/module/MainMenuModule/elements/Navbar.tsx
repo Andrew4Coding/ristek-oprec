@@ -4,8 +4,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react"
 
 export const Navbar: React.FC = () => {
-    const [activeTab, setActiveTab] = useState(1);
-
     const router = useRouter();
 
     function SignOut () {
@@ -39,7 +37,7 @@ export const Navbar: React.FC = () => {
                         height={20}
                         className="rounded-full w-[3rem] h-[3rem] object-cover"
                     />
-                    <button className="duration-150 hover:scale-105 hidden lg:flex"
+                    <button className="duration-150 hover:scale-105"
                     onClick={() => {
                         SignOut();
                     }}
