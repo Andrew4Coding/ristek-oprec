@@ -1,8 +1,7 @@
-import { NextApiRequest } from "next";
 import { prisma } from "../../../../../prisma/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextApiRequest, {params} : {params: {id: string}}) {
+export async function GET(req: NextRequest, {params} : {params: {id: string}}) {
     try {
         const transactions = await prisma.transaction.findMany({
             where: {

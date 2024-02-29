@@ -1,10 +1,8 @@
-import { NextApiRequest } from "next";
 import { prisma } from "../../../../prisma/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
     try {
-        const body = await req.body;
         const transactions = await prisma.transaction.findMany({
             where: {
                 userId: 1
