@@ -1,6 +1,6 @@
 import MyDatePicker from "@/components/Elements/Calendar/Calendar"; 
 
-import { useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { useRouter } from "next/navigation";
 import { LoadingSpin } from "@/components/Elements/Loader/LoadingSpin";
 
@@ -12,7 +12,7 @@ interface createTransaction {
     date: Date | null
 }
 
-export const CreateModal: React.FC = () => {
+export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolean>>}> = ({setOpenModal}) => {
     // Router
     const router = useRouter();
 
@@ -41,7 +41,6 @@ export const CreateModal: React.FC = () => {
     }
 
     async function CreateTransaction() {
-        const storageItem = localStorage.getItem('userID');
         const userId = await localStorage.getItem('userID');
 
         setIsLoading(true)
@@ -65,10 +64,9 @@ export const CreateModal: React.FC = () => {
             else {
                 setDoneCreate("error")
             }
-            setIsLoading(false)
-
-            console.log(data);
-            router.refresh();
+            setIsLoading(false);
+            setOpenModal(false);
+                
         }).catch(e => {
             console.log(e)
         })
@@ -159,6 +157,7 @@ export const CreateModal: React.FC = () => {
             <button
             onClick={() => {
                 CreateTransaction();
+                router.push('/');
             }}
             className="w-full px-5 py-3 text-white text-section-content font-bold bg-[#576BEA] rounded-xl duration-200 hover:scale-105">
                 Create

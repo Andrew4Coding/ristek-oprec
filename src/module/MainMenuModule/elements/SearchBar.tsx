@@ -22,7 +22,7 @@ export const SearchBar: React.FC<searchBar> = ({
             {
                 openModal &&
                 <Modal setState={setOpenModal}>
-                    <CreateModal />
+                    <CreateModal setOpenModal={setOpenModal}/>
                 </Modal>
             }
             <div className="w-full rounded-md text-sm bg-mainWhiteShade p-8 py-5 gap-5 font-medium flex">

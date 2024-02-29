@@ -41,6 +41,7 @@ export const DeleteModal: React.FC<deleteModalInterface> = ({
                 <button
                     onClick={() => {
                         deleteTransaction();
+                        setOpenModal(false);
                     }}
                     className="w-full bg-mainRed text-white py-3 rounded-xl font-bold duration-300 hover:scale-105">
                     Yes
