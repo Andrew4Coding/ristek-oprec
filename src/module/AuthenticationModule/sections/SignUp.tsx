@@ -29,7 +29,6 @@ export const SignUp: React.FC<authModalInterface> = ({ setState }) => {
         }).then(res => {
             return res.json();
         }).then(data => {
-            console.log(data)
             setIsLoading(false)
             if (data.message && data.status == "error") {
                 setErrorMessage(data.message);
@@ -109,14 +108,14 @@ export const SignUp: React.FC<authModalInterface> = ({ setState }) => {
             </div>
             {
                 errorMessage != '' &&
-                <p className="text-xs font-bold text-red-500">* {errorMessage}</p>
+                <p className="text-xs font-bold text-mainRed">* {errorMessage}</p>
             }
             <button
                 onClick={() => {
                     if (confirmPassword != userSignData.password) {
                         setErrorMessage('Passwords not matched')
                     }
-                    else if (confirmPassword == ''|| userSignData.email == '' || userSignData.password == ''){
+                    else if (userSignData.name == '' || confirmPassword == ''|| userSignData.email == '' || userSignData.password == ''){
                         setErrorMessage('Fields can not be empty')
                     }
                     else if (!userSignData.email.endsWith("@gmail.com")){
@@ -128,10 +127,8 @@ export const SignUp: React.FC<authModalInterface> = ({ setState }) => {
                 }}
                 className="w-full rounded-md text-sm p-5 bg-[#576BEA] text-white font-bold duration-200 hover:scale-105 flex justify-center gap-5">
                 {
-                    isLoading ?
+                    isLoading &&
                         <Image src={'/loading.svg'} alt="" width={20} height={20} className="animate-spin" />
-                        :
-                        null
                 }
                 <span>
                     Create
