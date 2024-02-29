@@ -1,13 +1,12 @@
 import { NextApiRequest } from "next";
-import { prisma } from "../../../../prisma/prisma";
+import { prisma } from "../../../../../prisma/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextApiRequest, {params} : {params: {id: string}}) {
     try {
-        const body = await req.body;
         const transactions = await prisma.transaction.findMany({
             where: {
-                userId: 1
+                userId: parseInt(params.id)
             }
         })
         
@@ -15,12 +14,15 @@ export async function GET(req: NextApiRequest) {
             message: 'Successfully get the user transactions',
             status: 'ok',
             transactions: transactions,
+            id: parseInt(params.id)
         }))
     }
     catch (err) {
         return new Response(JSON.stringify({
             message: 'Failed!',
-            error: 'error'
+            status: 'error',
+            params: params,
+            error: err
         }))
     }
 }

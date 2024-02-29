@@ -20,38 +20,25 @@ export const Navbar: React.FC = () => {
     return (
         <section className="w-full">
 
-            <div className="w-full bg-white rounded-3xl flex justify-between lg:px-8 lg:py-5 lg:border-[1px] border-[#CCC]">
-                <div className="hidden lg:flex gap-5 items-center">
-                    <div className="w-[2rem] h-[2rem] bg-[#F5F5F5] rounded-full"></div>
-                    {
-                        ["Wrapped up", "Transactions", "Financial Report"].map((item, index) => {
-                            return (
-                                <button className="duration-500 hover:scale-105" key={index}
-                                onClick={() => {
-                                    setActiveTab(index);
-                                }}
-                                >
-                                    <span className={`font-bold ${index == activeTab ? 'underline underline-offset-8 text-[#576BEA]' : 'text-[#EFEFEF]'}`}>{item}</span>
-                                </button>
-                            )
-                        })
-                    }
-
-                </div>
-                
-                <button className="lg:hidden">
-                    <Image src={'/hamburger.svg'} alt="" width={20} height={20} className="flex"/>
-                </button>
-
-
+            <div className="w-full bg-white rounded-3xl flex justify-end lg:px-8 lg:py-5">                
                 <div className="flex gap-5 justify-end items-center">
                     <div className="flex flex-col items-end">
-                        <h2 className="font-bold text-xl">Andrew Devito</h2>
-                        <h2 className="font-medium text-sm">{
+                        <h2 className="font-bold text-section-title">
+                            {
+                                typeof window == 'undefined' ? '' : localStorage.getItem('userName')
+                            }
+                        </h2>
+                        <h2 className="font-medium text-section-subtitle">{
                             typeof window == 'undefined' ? '' : localStorage.getItem('userEmail')
                         }</h2>
                     </div>
-                    <div className="bg-[#f5f5f5] h-[3rem] w-[3rem] rounded-full"></div>
+                    <Image 
+                        src={'/chipi.jpg'}
+                        alt=""
+                        width={20}
+                        height={20}
+                        className="rounded-full w-[3rem] h-[3rem] object-cover"
+                    />
                     <button className="duration-150 hover:scale-105 hidden lg:flex"
                     onClick={() => {
                         SignOut();

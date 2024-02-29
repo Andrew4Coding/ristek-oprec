@@ -15,6 +15,7 @@ export const TransactionList: React.FC = () => {
     const transactionList = context?.transactionList;
 
     useEffect(() => {
+        console.log(searchFilter?.length);
         if (transactionList && tempFilter == null){
             const sorted = transactionList?.slice().sort((a, b) => {
                 const keyA = a.category;
@@ -105,12 +106,18 @@ export const TransactionList: React.FC = () => {
             <Filter setState={setFilterTypeIndex} state={filterTypeIndex}/>
             <div className="overflow-y-scroll overflow-x-hidden box-border max-h-[27rem] flex flex-col gap-3 items-center">
                 {
+                    searchFilter?.length === 0 &&
+                    <p className="text-mainGray font-medium text-section-content">No transactions, click + to add transactions</p>
+                }
+                {
                     searchFilter ? 
-                    searchFilter.map((item) => {
-                        return (
-                            <TransactionCard item={item} key={item.id}/>
-                        )
-                    })
+                    (
+                        searchFilter.map((item) => {
+                            return (
+                                <TransactionCard item={item} key={item.id}/>
+                            )
+                        })
+                    )
                     :
                     <LoadingSpin size="24" fill="#576BEA"/>
                 }

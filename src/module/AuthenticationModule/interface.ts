@@ -9,3 +9,7 @@ export interface authModalSignInterface {
     email: string,
     password: string,
 }
+
+export interface signUpInterface extends authModalSignInterface {
+    name: string
+}

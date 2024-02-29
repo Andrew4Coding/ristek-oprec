@@ -9,7 +9,6 @@ export async function POST(req: Request) {
             where: {email: body.email}
         })
         
-        const hashedPassword = getSalt(body.passsword)
 
         if (!user) {
             await prisma.user.create(
@@ -36,7 +35,8 @@ export async function POST(req: Request) {
     catch (error) {
         return new Response(JSON.stringify({
             message: "Failed to signup",
-            status: "error"
+            status: "error",
+            error: error
         }))
     }
 

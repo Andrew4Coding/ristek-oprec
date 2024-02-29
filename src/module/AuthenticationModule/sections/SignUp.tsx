@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { authModalInterface, authModalSignInterface } from "../interface";
+import { authModalInterface, authModalSignInterface, signUpInterface } from "../interface";
 
 import Image from "next/image";
 
 export const SignUp: React.FC<authModalInterface> = ({ setState }) => {
     const [isShowPassword, setIsShowPassword] = useState(true);
-    const [userSignData, setUserSignData] = useState<authModalSignInterface>({
+    const [userSignData, setUserSignData] = useState<signUpInterface>({
         email: '',
-        password: ''
+        password: '',
+        name: ''
     })
 
     const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +29,7 @@ export const SignUp: React.FC<authModalInterface> = ({ setState }) => {
         }).then(res => {
             return res.json();
         }).then(data => {
+            console.log(data)
             setIsLoading(false)
             if (data.message && data.status == "error") {
                 setErrorMessage(data.message);
@@ -44,7 +46,17 @@ export const SignUp: React.FC<authModalInterface> = ({ setState }) => {
             <h2 className="font-bold text-3xl">
                 Sign Up
             </h2>
-
+            <input type="text" className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] p-5 font-medium" placeholder="Username"
+                onChange={(e) => {
+                    setUserSignData(
+                        {
+                            ...userSignData,
+                            name: e.target.value
+                        }
+                    )
+                }}
+            />
+            
             <input type="text" className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] p-5 font-medium" placeholder="Email"
                 onChange={(e) => {
                     setUserSignData(

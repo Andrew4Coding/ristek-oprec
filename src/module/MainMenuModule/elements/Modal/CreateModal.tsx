@@ -40,11 +40,9 @@ export const CreateModal: React.FC = () => {
         )
     }
 
-    function CreateTransaction() {
-        let userId = '1';
-        if (typeof window !== 'undefined'){
-            let userId = localStorage.getItem('userId');
-        }   
+    async function CreateTransaction() {
+        const storageItem = localStorage.getItem('userID');
+        const userId = await localStorage.getItem('userID');
 
         setIsLoading(true)
 
@@ -56,7 +54,7 @@ export const CreateModal: React.FC = () => {
             body: JSON.stringify({
                 ...createTransaction,
                 type: transactionType,
-                userId: parseInt(userId)
+                userId: parseInt(userId ? userId : '1')
             })
         }).then(res => {
             return res.json();
@@ -69,7 +67,8 @@ export const CreateModal: React.FC = () => {
             }
             setIsLoading(false)
 
-            router.refresh;
+            console.log(data);
+            router.refresh();
         }).catch(e => {
             console.log(e)
         })

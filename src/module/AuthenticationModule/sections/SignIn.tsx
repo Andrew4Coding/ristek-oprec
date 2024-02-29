@@ -39,6 +39,7 @@ export const SignIn: React.FC<authModalInterface> = ({ setState }) => {
             else {
                 setErrorMessage('');
                 if (typeof window !== 'undefined'){
+                    localStorage.setItem('userName', data.user.name)
                     localStorage.setItem('userEmail', userSignData.email)
                     localStorage.setItem('userID', data.user.id)
                 }
