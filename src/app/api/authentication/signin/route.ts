@@ -1,3 +1,4 @@
+import { compare, genSalt, hash } from "bcryptjs";
 import { prisma } from "../../../../../prisma/prisma";
 import {sign} from "jsonwebtoken";
 
@@ -15,7 +16,9 @@ export const POST = async (req: Request) => {
         }))
     }
     else {
-        if (body.password == user.password){
+        const passwordMatch = await compare(body.password, user.password);
+
+        if (passwordMatch){
             return new Response(JSON.stringify({
                 message: "Successfully login",
                 status: "ok",

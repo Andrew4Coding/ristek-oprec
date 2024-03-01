@@ -1,24 +1,30 @@
 import { prisma } from "../../../../../prisma/prisma";
-import { getSalt } from "bcryptjs"
+import { genSalt, hash } from "bcryptjs"
 
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-    
+
         const user = await prisma.user.findUnique({
-            where: {email: body.email}
+            where: { email: body.email }
         })
-        
+
+        const saltRounds = 10; // Number of salt rounds (recommended value)
+        const salt = await genSalt(saltRounds);
+
+        const hashedPassword = await hash(body.password, salt);
 
         if (!user) {
             await prisma.user.create(
                 {
                     data: {
-                        ...body,
+                        name: body.name,
+                        email: body.email,
+                        password: hashedPassword
                     }
                 }
             )
-    
+
             return new Response(JSON.stringify({
                 message: "User created succesfully",
                 status: "ok",
@@ -40,5 +46,5 @@ export async function POST(req: Request) {
         }))
     }
 
-    
+
 }
