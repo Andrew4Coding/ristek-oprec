@@ -13,9 +13,6 @@ interface createTransaction {
 }
 
 export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolean>>}> = ({setOpenModal}) => {
-    // Router
-    const router = useRouter();
-
     // State management
     const [transactionType, setTransactionType] = useState('EXPENSE');
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
@@ -48,7 +45,8 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
         fetch(`/api/transactions`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `${localStorage.getItem('sessionToken')}`
               },
             body: JSON.stringify({
                 ...createTransaction,
@@ -58,8 +56,10 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
         }).then(res => {
             return res.json();
         }).then(data => {   
+            console.log(data);
             if (data.status === 'ok') {
                 setDoneCreate("ok");
+                window.location.reload();
             }
             else {
                 setDoneCreate("error")
@@ -157,7 +157,6 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
             <button
             onClick={() => {
                 CreateTransaction();
-                router.push('/');
             }}
             className="w-full px-5 py-3 text-white text-section-content font-bold bg-[#576BEA] rounded-xl duration-200 hover:scale-105">
                 Create

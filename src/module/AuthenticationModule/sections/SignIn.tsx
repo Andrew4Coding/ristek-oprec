@@ -22,7 +22,6 @@ export const SignIn: React.FC<authModalInterface> = ({ setState }) => {
         setIsLoading(true);
         fetch(`/api/authentication/signin`, {
             method: 'POST',
-            mode: 'cors',
             headers: {
                 "Content-Type": "application/json"
             },
@@ -32,6 +31,7 @@ export const SignIn: React.FC<authModalInterface> = ({ setState }) => {
         }).then(res => {
             return res.json();
         }).then(data => {
+            console.log(data);
             setIsLoading(false);
             if (data.message && data.status == "error") {
                 setErrorMessage(data.message);
@@ -42,6 +42,7 @@ export const SignIn: React.FC<authModalInterface> = ({ setState }) => {
                     localStorage.setItem('userName', data.user.name)
                     localStorage.setItem('userEmail', userSignData.email)
                     localStorage.setItem('userID', data.user.id)
+                    localStorage.setItem('sessionToken', data.token)
                 }
                 router.push('/');
             }

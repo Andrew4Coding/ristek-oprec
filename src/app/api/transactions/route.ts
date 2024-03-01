@@ -1,29 +1,36 @@
 import { prisma } from "../../../../prisma/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+import { middleware } from "../middleware";
+
+export const GET = middleware(async (req: NextRequest, userId: string) => {
     try {
         const transactions = await prisma.transaction.findMany({
             where: {
-                userId: 1
+                userId: parseInt(userId)
             }
         })
-        
+
         return new Response(JSON.stringify({
             message: 'Successfully get the user transactions',
+            authorization: "Authorized!",
             status: 'ok',
             transactions: transactions,
+            id: userId
         }))
+
+        
     }
     catch (err) {
         return new Response(JSON.stringify({
             message: 'Failed!',
-            error: 'error'
+            status: 'error',
+            error: err
         }))
     }
-}
+})
 
-export async function POST(req: Request) {
+export const POST = middleware(async (req: NextRequest, userId: string) => {
     try {
         const body = await req.json();
         await prisma.transaction.create({
@@ -38,15 +45,15 @@ export async function POST(req: Request) {
             body: body
         }))
     }
-    catch(e) {
+    catch (e) {
         return new NextResponse(JSON.stringify({
             message: 'error',
             status: 'error'
         }))
     }
-}
+})
 
-export async function DELETE(req: Request) {
+export const DELETE = middleware(async (req: Request) => {
     try {
         const body = await req.json();
 
@@ -77,9 +84,9 @@ export async function DELETE(req: Request) {
             error: e
         }))
     }
-}
+})
 
-export async function PUT(req: Request) {
+export const PUT = middleware(async (req: Request) => {
     try {
         const body = await req.json();
         await prisma.transaction.update({
@@ -97,11 +104,11 @@ export async function PUT(req: Request) {
             body: body
         }))
     }
-    catch(e) {
+    catch (e) {
         return new NextResponse(JSON.stringify({
             message: 'error',
             status: 'error',
             error: e
         }))
     }
-}
+})

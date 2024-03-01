@@ -1,7 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { transactionItem } from "../../interface"
-import { Modal } from "@/components/Elements/Modal/Modal";
-import { EditModal } from "./EditModal";
 import { thousandSeparator } from "@/components/util/thousandSeparator";
 
 interface editModalInterface extends transactionItem {

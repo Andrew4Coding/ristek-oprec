@@ -32,8 +32,12 @@ export const MainMenuModule: React.FC = () => {
         }
 
         setIsLoading(true);
-        fetch(`/api/transactions/${localStorage.getItem("userID")}`, {
+        fetch(`/api/transactions/`, {
             method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${localStorage.getItem('sessionToken')}`
+              }
         }).then(res => {
             return res.json();
         }).then(data => {
@@ -51,8 +55,10 @@ export const MainMenuModule: React.FC = () => {
                 <Navbar />
                 <div className="w-full  flex flex-col lg:flex-row gap-5">
                     <div className="flex-grow-0 lg:flex-grow flex flex-col gap-5">
-                        <TotalExpense />
-                        <TotalIncome />
+                        <div className="flex-grow-0 lg:flex-grow flex flex-col sm:flex-row lg:flex-col gap-5">
+                            <TotalExpense />
+                            <TotalIncome />
+                        </div>
                         <Analytics />
                     </div>
                     <TransactionList />

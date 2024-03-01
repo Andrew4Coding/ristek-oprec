@@ -13,11 +13,15 @@ export const DeleteModal: React.FC<deleteModalInterface> = ({
 }) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    
+
     const deleteTransaction = async () => {
         setIsLoading(true);
         fetch(`/api/transactions/`, {
             method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${localStorage.getItem('sessionToken')}`
+            },
             body: JSON.stringify({
                 id: item.id
             })
@@ -25,7 +29,7 @@ export const DeleteModal: React.FC<deleteModalInterface> = ({
             return res.json();
         }).then(data => {
             setIsLoading(false);
-            router.refresh();
+            window.location.reload();
         }).catch(e => {
             console.log(e);
         })
@@ -35,7 +39,7 @@ export const DeleteModal: React.FC<deleteModalInterface> = ({
         <article className="p-8 flex flex-col items-center justify-center gap-3 bg-white h-fit w-fit border-[#CCC] border-2 rounded-sectionCorner">
             <h1 className="font-bold text-section-title">Delete Transaction?</h1>
             {
-                isLoading && <LoadingSpin size="20" fill="#FB7373" className=""/>
+                isLoading && <LoadingSpin size="20" fill="#FB7373" className="" />
             }
             <div className="w-full flex gap-3 text-section-content">
                 <button
@@ -43,7 +47,7 @@ export const DeleteModal: React.FC<deleteModalInterface> = ({
                         deleteTransaction();
                         setOpenModal(false);
                     }}
-                    className="w-full bg-mainRed text-white py-3 rounded-xl font-bold duration-300 hover:scale-105">
+                    className="bg-mainRed w-full text-white py-3 rounded-xl font-bold duration-300 hover:scale-105">
                     Yes
                 </button>
                 <button
