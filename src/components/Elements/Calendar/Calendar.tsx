@@ -2,8 +2,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface datePickerInterface {
-  selectedDate: Date | null,
-  onChange: (date: Date | null) => void,
+  selectedDate: Date,
+  onChange: (date: Date) => void,
   className?: string,
 }
 

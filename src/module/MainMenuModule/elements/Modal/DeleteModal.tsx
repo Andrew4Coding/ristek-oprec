@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { transactionData } from "../../interface"
-import { useRouter } from "next/navigation"
 import { LoadingSpin } from "@/components/Elements/Loader/LoadingSpin"
 
 interface deleteModalInterface {
@@ -11,7 +10,6 @@ interface deleteModalInterface {
 export const DeleteModal: React.FC<deleteModalInterface> = ({
     setOpenModal, item
 }) => {
-    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
 
     const deleteTransaction = async () => {
@@ -29,6 +27,7 @@ export const DeleteModal: React.FC<deleteModalInterface> = ({
             return res.json();
         }).then(data => {
             setIsLoading(false);
+            setOpenModal(false);
             window.location.reload();
         }).catch(e => {
             console.log(e);
@@ -45,7 +44,6 @@ export const DeleteModal: React.FC<deleteModalInterface> = ({
                 <button
                     onClick={() => {
                         deleteTransaction();
-                        setOpenModal(false);
                     }}
                     className="bg-mainRed w-full text-white py-3 rounded-xl font-bold duration-300 hover:scale-105">
                     Yes

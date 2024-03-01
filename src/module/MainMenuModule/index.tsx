@@ -2,11 +2,10 @@
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction, createContext, useEffect, useState } from "react"
 import { TransactionList } from "./sections/TransactionsList";
-import { TotalIncome } from "./sections/TotalIncome";
-import { TotalExpense } from "./sections/TotalExpense";
 import { Analytics } from "./sections/Analytics";
 import { Navbar } from "./elements/Navbar";
 import { transactionData } from "./interface";
+import { Flow } from "@/components/Elements/Template/Flow";
 
 export const UserTransactionsContext = createContext<{
     transactionList: transactionData[] | null,
@@ -25,7 +24,7 @@ export const MainMenuModule: React.FC = () => {
     useEffect(() => {
         if (typeof window != 'undefined') {
             if (
-                !localStorage.getItem('userEmail')
+                !localStorage.getItem('sessionToken')
             ) {
                 router.push('/authentication')
             }
@@ -53,11 +52,11 @@ export const MainMenuModule: React.FC = () => {
         <UserTransactionsContext.Provider value={{isLoading, transactionList, tempFilter, setTempFilter}}>
             <main className="px-5  py-10 lg:py-20 lg:pt-10 lg:px-20 w-full flex flex-col gap-5 ">
                 <Navbar />
-                <div className="w-full  flex flex-col lg:flex-row gap-5">
+                <div className="w-full flex flex-col lg:flex-row gap-5">
                     <div className="flex-grow-0 lg:flex-grow flex flex-col gap-5">
                         <div className="flex-grow-0 lg:flex-grow flex flex-col sm:flex-row lg:flex-col gap-5">
-                            <TotalExpense />
-                            <TotalIncome />
+                            <Flow type="EXPENSE"/>
+                            <Flow type="INCOME"/>
                         </div>
                         <Analytics />
                     </div>

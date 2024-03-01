@@ -1,22 +1,24 @@
 export interface transactionData {
-    id: number,
+    id?: number,
     name: string,
     date: Date,
     type: "INCOME" | "EXPENSE",
     description: string,
-    category:
-    "food" |
-    "bills" |
-    "laundry" |
-    "transporation" |
-    "recreational" |
-    "health" |
-    "technology" |
-    "other"
+    category: transactionCategoriesEnum
     amount: number,
-    userId: number
 }
 
 export interface transactionItem {
     item: transactionData
+}
+
+export enum transactionCategoriesEnum {
+    Food = "FOOD",
+    Bills = "BILLS",
+    Laundry = "LAUNDRY",
+    Transportation = "TRANSPORTATION",
+    Recreational = "RECREATIONAL",
+    Health = "HEALTH",
+    Technology = "TECHNOLOGY",
+    Other = "OTHER",
 }

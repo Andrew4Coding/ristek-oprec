@@ -1,15 +1,13 @@
 'use client'
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react"
 
 export const Navbar: React.FC = () => {
     const router = useRouter();
 
     function SignOut () {
         if (typeof window !== 'undefined') {
-            localStorage.removeItem('userEmail');
-            localStorage.removeItem('userID');
+            localStorage.clear();
         }
         
         router.push('/authentication');
@@ -42,7 +40,7 @@ export const Navbar: React.FC = () => {
                         SignOut();
                     }}
                     >
-                        <Image src={'/signout.svg'} alt="" width={20} height={20} className=""/>
+                        <Image src={'/signout.svg'} alt="" width={20} height={20} className="w-auto h-auto"/>
                     </button>
                 </div>
             </div>

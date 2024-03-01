@@ -1,5 +1,5 @@
 'use client'
-import { Chart as ChartJS, CategoryScale, registerables, plugins} from "chart.js"
+import { Chart as ChartJS, CategoryScale, registerables, plugins } from "chart.js"
 import { useContext, useEffect, useState } from "react";
 import { Bar, Doughnut, Line } from "react-chartjs-2"
 import { UserTransactionsContext } from "..";
@@ -26,33 +26,36 @@ export const Analytics: React.FC = () => {
 
         return sum;
     }
-    
+
 
     const categories = ["Food", "Bills", "Laundry", "Education", "Transportation", "Recreational", "Health", "Technology", "Other"];
 
     return (
         <section className="bg-white w-full min-h-[20rem] h-full shadow-sectionShadow rounded-sectionCorner p-8 text-section-title font-bold flex flex-col gap-3 items-center">
             <h2 className="text-left w-full">Financial Analysis</h2>
-                <div className='w-full h-full max-w-[20rem]'>                    
-                        <Doughnut 
-                            className=""
-                            title="Hello"
-                            data={{
-                                labels: categories,
-                                datasets: [
-                                    {
-                                        label: "Expense",
-                                        data: categories.map(item => checkSumCategory("EXPENSE", item.toUpperCase()))
-                                    },
-                                    {
-                                        label: "Income",
-                                        data: categories.map(item => checkSumCategory("INCOME", item.toUpperCase()))
-                                    }
-                                ]
-                            }}
-                        />
+            {
+                data && 
+                <div className='w-full h-full max-w-[20rem]'>
+                    <Doughnut
+                        className=""
+                        title="Hello"
+                        data={{
+                            labels: categories,
+                            datasets: [
+                                {
+                                    label: "Expense",
+                                    data: categories.map(item => checkSumCategory("EXPENSE", item.toUpperCase()))
+                                },
+                                {
+                                    label: "Income",
+                                    data: categories.map(item => checkSumCategory("INCOME", item.toUpperCase()))
+                                }
+                            ]
+                        }}
+                    />
                 </div>
-                            
+            }
+
         </section>
     )
 }

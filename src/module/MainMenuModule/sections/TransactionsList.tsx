@@ -1,3 +1,4 @@
+'use client'
 import { TransactionCard } from "../elements/TransactionCard"
 import { useContext, useEffect, useState } from "react"
 import { transactionData } from "../interface"
@@ -5,10 +6,12 @@ import { LoadingSpin } from "@/components/Elements/Loader/LoadingSpin";
 import { SearchBar } from "../elements/SearchBar";
 import { Filter } from "../elements/Filter";
 import { UserTransactionsContext } from "..";
+import handleFilter from "@/components/util/sortMechanism";
 
 export const TransactionList: React.FC = () => {
     const [tempFilter, setTempFilter] = useState<transactionData[] | null>(null);
-    const [searchFilter, setSearchFilter] = useState<transactionData[] | null>(null)
+    const [searchFilter, setSearchFilter] = useState<transactionData[] | null>(null);
+
     const [filterTypeIndex, setFilterTypeIndex] = useState(0);
 
     const context = useContext(UserTransactionsContext);
@@ -30,123 +33,43 @@ export const TransactionList: React.FC = () => {
     })
 
     useEffect(() => {
-        if (transactionList === null || transactionList == undefined) {
-
+        if (transactionList) {
+            handleFilter({
+                transactionList,
+                tempFilter,
+                setTempFilter,
+                searchFilter,
+                setSearchFilter,
+                filterTypeIndex
+            })
         }
 
-        let sorted;
-        switch (filterTypeIndex) {
-            case 0:
-                sorted = transactionList?.slice().sort((a, b) => {
-                    const dateA = new Date(a.date).getTime();
-                    const dateB = new Date(b.date).getTime();
-
-                    return dateB - dateA;
-                })
-                if (sorted && searchFilter) {
-                    setTempFilter(
-                        sorted
-                    );
-                    setSearchFilter(sorted)
-                }
-                break;
-
-            case 1:
-                sorted = transactionList?.slice().sort((a, b) => {
-                    const keyA = a.category;
-                    const keyB = b.category;
-
-                    if (keyA < keyB) return -1;
-                    if (keyA > keyB) return 1;
-                    return 0
-                })
-                if (sorted && searchFilter) {
-                    setTempFilter(
-                        sorted
-                    );
-                    setSearchFilter(sorted)
-                }
-                break;
-
-            case 2:
-                sorted = transactionList?.slice().sort((a, b) => a.amount - b.amount).reverse();
-                if (sorted && searchFilter) {
-                    setTempFilter(
-                        sorted
-                    );
-                    setSearchFilter(sorted)
-                }
-                break;
-
-            case 3:
-                const todayDate = new Date();
-    
-                sorted = transactionList?.filter(item => new Date(item.date).toDateString() == todayDate.toDateString());
-
-
-                if (sorted && searchFilter) {
-                    setTempFilter(
-                        sorted
-                    );
-                    setSearchFilter(sorted)
-                }
-                break;
-            case 4:
-                const today = new Date();
-
-                // Get the start date of the current week (Sunday)
-                const startOfWeek = new Date(today);
-                startOfWeek.setDate(today.getDate() - today.getDay());
-
-                // Get the end date of the current week (Saturday)
-                const endOfWeek = new Date(today);
-                endOfWeek.setDate(today.getDate() + (6 - today.getDay()));
-
-                // Check if the given date falls within the current week
-                sorted = transactionList?.filter(item => new Date(item.date) >= startOfWeek && new Date(item.date) <= endOfWeek)
-                .slice().sort((a, b) => {
-                    const dateA = new Date(a.date).getTime();
-                    const dateB = new Date(b.date).getTime();
-
-                    return dateB - dateA;
-                })
-
-                if (sorted && searchFilter) {
-                    setTempFilter(
-                        sorted
-                    );
-                    setSearchFilter(sorted)
-                }
-                break;
-            default:
-                break;
-        }
     }, [filterTypeIndex])
 
     return (
         <section className="bg-white w-full lg:w-[70%] min-h-full shadow-sectionShadow rounded-sectionCorner p-8 text-section-title font-bold flex flex-col gap-3">
             <h3>Transactions History</h3>
             {
-                transactionList !== undefined &&
+                transactionList &&
                 <SearchBar setState={setSearchFilter} state={tempFilter} />
             }
             <Filter setState={setFilterTypeIndex} state={filterTypeIndex} />
             <div className="overflow-y-scroll overflow-x-hidden box-border max-h-[33rem] flex flex-col gap-3 items-center">
                 {
-                    transactionList?.length === 0 &&
+                    transactionList?.length == 0 &&
                     <p className="text-mainGray font-medium text-section-content">No transactions, click + to add transactions</p>
                 }
                 {
                     searchFilter ?
-                        (
-                            searchFilter.map((item) => {
-                                return (
-                                    <TransactionCard item={item} key={item.id} />
-                                )
-                            })
-                        )
-                        :
-                        <LoadingSpin size="24" fill="#576BEA" />
+                    (
+                        searchFilter.map((item) => {
+                            return (
+                                <TransactionCard item={item} key={item.id} />
+                            )
+                        })
+                    )
+                    :
+                    <LoadingSpin size="24" fill="#576BEA" />
                 }
             </div>
         </section>

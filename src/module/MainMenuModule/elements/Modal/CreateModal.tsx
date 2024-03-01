@@ -1,47 +1,36 @@
 import MyDatePicker from "@/components/Elements/Calendar/Calendar"; 
 
 import { Dispatch, SetStateAction, useState } from "react"
-import { useRouter } from "next/navigation";
 import { LoadingSpin } from "@/components/Elements/Loader/LoadingSpin";
-
-interface createTransaction {
-    name: string,
-    amount: number,
-    description: string,
-    category: string,
-    date: Date | null
-}
+import { transactionCategoriesEnum, transactionData } from "../../interface";
 
 export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolean>>}> = ({setOpenModal}) => {
     // State management
-    const [transactionType, setTransactionType] = useState('EXPENSE');
-    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-    const [createTransaction, setCreateTransaction] = useState<createTransaction>({
+    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+    const [transactionData, setCreateTransaction] = useState<transactionData>({
         name: '',
         amount: NaN,
         description: '',
         date: new Date(),
-        category: 'FOOD'
+        category: transactionCategoriesEnum.Food,
+        type: "EXPENSE"
     })
 
     // IsLoading State
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleDateChange = (date: Date | null) => {
+    const handleDateChange = (date: Date) => {
         setSelectedDate(date);
         setCreateTransaction(
             {
-                ... createTransaction,
+                ... transactionData,
                 date: date
             }
         )
     }
 
     async function CreateTransaction() {
-        const userId = await localStorage.getItem('userID');
-
         setIsLoading(true)
-
         fetch(`/api/transactions`, {
             method: 'POST',
             headers: {
@@ -49,22 +38,19 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
                 'Authorization': `${localStorage.getItem('sessionToken')}`
               },
             body: JSON.stringify({
-                ...createTransaction,
-                type: transactionType,
-                userId: parseInt(userId ? userId : '1')
+                ...transactionData,
             })
         }).then(res => {
             return res.json();
         }).then(data => {   
-            console.log(data);
             if (data.status === 'ok') {
                 setDoneCreate("ok");
                 window.location.reload();
             }
             else {
+                setIsLoading(false);
                 setDoneCreate("error")
             }
-            setIsLoading(false);
             setOpenModal(false);
                 
         }).catch(e => {
@@ -80,13 +66,13 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
             <h1 className="font-bold text-xl">Create Transaction</h1>
             <div className="flex justify-between gap-5">
                 <button
-                    onClick={() => { setTransactionType('EXPENSE') }}
-                    className={`w-full px-5 py-2 font-bold rounded-md text-sm ${transactionType == 'EXPENSE' ? 'bg-mainRed text-white' : 'text-[#C5C9D3]'}`}>
+                    onClick={() => { setCreateTransaction({...transactionData, type: "EXPENSE"}) }}
+                    className={`w-full px-5 py-2 font-bold rounded-md text-sm ${transactionData.type == 'EXPENSE' ? 'bg-mainRed text-white' : 'text-[#C5C9D3]'}`}>
                     Expense
                 </button>
                 <button
-                    onClick={() => { setTransactionType('INCOME') }}
-                    className={`w-full px-5 py-2 font-bold rounded-md text-sm ${transactionType == 'INCOME' ? 'bg-mainGreen text-white' : 'text-[#C5C9D3]'}`}>
+                    onClick={() => { setCreateTransaction({...transactionData, type: "INCOME"}) }}
+                    className={`w-full px-5 py-2 font-bold rounded-md text-sm ${transactionData.type == 'INCOME' ? 'bg-mainGreen text-white' : 'text-[#C5C9D3]'}`}>
                     Income
                 </button>
             </div>
@@ -95,15 +81,15 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
                 <input type="text" className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] py-3 px-5 font-medium " placeholder="Title"
                     onChange={(e) => {
                         setCreateTransaction({
-                            ...createTransaction,
+                            ...transactionData,
                             name: e.target.value
                         })
                     }}
                 />
-                <input type="text" value={Number.isNaN(createTransaction.amount) ? '' : createTransaction.amount} className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] py-3 px-5 font-medium " placeholder="Nominal"
+                <input type="text" value={Number.isNaN(transactionData.amount) ? '' : transactionData.amount} className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] py-3 px-5 font-medium " placeholder="Nominal"
                     onChange={(e) => {
                         setCreateTransaction({
-                            ...createTransaction,
+                            ...transactionData,
                             amount: parseInt(e.target.value)
                         })
                     }}
@@ -111,7 +97,7 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
                 <textarea
                 onChange={(e) => {
                     setCreateTransaction({
-                        ...createTransaction,
+                        ...transactionData,
                         description: e.target.value
                     })
                 }}
@@ -128,8 +114,8 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
                 <select className="p-2 outline-none text-[#576BEA]  text-sm" onChange={(e) => {
 
                     setCreateTransaction({
-                        ...createTransaction,
-                        category: e.target.value.toUpperCase()
+                        ...transactionData,
+                        category: e.target.value.toUpperCase() as transactionCategoriesEnum
                     })
                 }}>
                     {
