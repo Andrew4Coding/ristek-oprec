@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import { NextRequest, NextResponse } from 'next/server';
+import {verify} from 'jsonwebtoken';
+import { NextRequest } from 'next/server';
 
 export const middleware = (handler: (req: NextRequest, userId: string) => Promise<Response>) => {
     return async (req: NextRequest) => {
@@ -13,7 +13,7 @@ export const middleware = (handler: (req: NextRequest, userId: string) => Promis
                 }))
             }
 
-            const decoded = jwt.verify(token, process.env.ACCESS_TOKEN as string);
+            const decoded = verify(token, process.env.ACCESS_TOKEN as string);
             const userId = (decoded as {id: string});
             
             return handler(req, userId.id);

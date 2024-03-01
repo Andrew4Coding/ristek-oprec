@@ -1,15 +1,13 @@
 import { prisma } from "../../../../../prisma/prisma";
-import jwt from "jsonwebtoken";
-import { NextApiResponse } from "next";
+import {sign} from "jsonwebtoken";
 
-export const POST = async (req: Request, res: NextApiResponse) => {
+export const POST = async (req: Request) => {
     const body = await req.json();
     const user = await prisma.user.findUnique({
         where: {email: body.email}
     })
 
-    const access_token = await jwt.sign(JSON.stringify(user), process.env.ACCESS_TOKEN as string);
-
+    const access_token = await sign(JSON.stringify(user), process.env.ACCESS_TOKEN as string);
     if (!user) {
         return new Response(JSON.stringify({
             message: "User not Found",
