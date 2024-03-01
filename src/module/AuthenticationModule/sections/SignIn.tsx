@@ -31,7 +31,6 @@ export const SignIn: React.FC<authModalInterface> = ({ setState }) => {
         }).then(res => {
             return res.json();
         }).then(data => {
-            console.log(data);
             setIsLoading(false);
             if (data.message && data.status == "error") {
                 setErrorMessage(data.message);
@@ -46,7 +45,8 @@ export const SignIn: React.FC<authModalInterface> = ({ setState }) => {
                 }
                 router.push('/');
             }
-
+        }).catch(e => {
+            setErrorMessage(e)
         })
     }
 

@@ -15,7 +15,6 @@ export const Navbar: React.FC = () => {
 
     return (
         <section className="w-full">
-
             <div className="w-full bg-white rounded-3xl flex justify-end lg:px-8 lg:py-5">                
                 <div className="flex gap-5 justify-end items-center">
                     <div className="flex flex-col items-end">

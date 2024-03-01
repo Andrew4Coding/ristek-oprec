@@ -49,20 +49,17 @@ export const TransactionList: React.FC = () => {
     return (
         <section className="bg-white w-full lg:w-[70%] min-h-full shadow-sectionShadow rounded-sectionCorner p-8 text-section-title font-bold flex flex-col gap-3">
             <h3>Transactions History</h3>
-            {
-                transactionList &&
-                <SearchBar setState={setSearchFilter} state={tempFilter} />
-            }
+            <SearchBar setState={setSearchFilter} state={tempFilter} />
             <Filter setState={setFilterTypeIndex} state={filterTypeIndex} />
             <div className="overflow-y-scroll overflow-x-hidden box-border max-h-[33rem] flex flex-col gap-3 items-center">
                 {
-                    transactionList?.length == 0 &&
+                    !transactionList || transactionList.length == 0 &&
                     <p className="text-mainGray font-medium text-section-content">No transactions, click + to add transactions</p>
                 }
                 {
-                    searchFilter ?
+                    transactionList ?
                     (
-                        searchFilter.map((item) => {
+                        searchFilter?.map((item) => {
                             return (
                                 <TransactionCard item={item} key={item.id} />
                             )

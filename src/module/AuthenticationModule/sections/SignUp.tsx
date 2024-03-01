@@ -2,6 +2,7 @@ import { useState } from "react";
 import { authModalInterface, authModalSignInterface, signUpInterface } from "../interface";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export const SignUp: React.FC<authModalInterface> = ({ setState }) => {
     const [isShowPassword, setIsShowPassword] = useState(true);
@@ -10,7 +11,7 @@ export const SignUp: React.FC<authModalInterface> = ({ setState }) => {
         password: '',
         name: ''
     })
-
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -19,13 +20,10 @@ export const SignUp: React.FC<authModalInterface> = ({ setState }) => {
         setIsLoading(true);
         fetch(`api/authentication/signup`, {
             method: 'POST',
-            mode: 'cors',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                ...userSignData
-            })
+            body: JSON.stringify(userSignData)
         }).then(res => {
             return res.json();
         }).then(data => {
@@ -35,6 +33,13 @@ export const SignUp: React.FC<authModalInterface> = ({ setState }) => {
             }
             else {
                 setErrorMessage('');
+                if (typeof window !== 'undefined'){
+                    localStorage.setItem('userName', data.user.name)
+                    localStorage.setItem('userEmail', userSignData.email)
+                    localStorage.setItem('userID', data.user.id)
+                    localStorage.setItem('sessionToken', data.token)
+                }
+                router.push('/');
             }
         })
     }

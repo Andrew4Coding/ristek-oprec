@@ -33,10 +33,10 @@ export const GET = middleware(async (req: NextRequest, userId: string) => {
 export const POST = middleware(async (req: NextRequest, userId: string) => {
     try {
         const body = await req.json();
-        console.log(userId)
+
         await prisma.transaction.create({
             data: {
-                ...body,
+                ...body,                
                 userId: parseInt(userId),
             }
         })
@@ -52,7 +52,6 @@ export const POST = middleware(async (req: NextRequest, userId: string) => {
             message: 'error',
             status: 'error',
             error: e,
-            body: req.json()
         }))
     }
 })

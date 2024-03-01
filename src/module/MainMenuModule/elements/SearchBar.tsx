@@ -37,7 +37,6 @@ export const SearchBar: React.FC<searchBar> = function ({
                         }
                     } } />
             </div>
-
             <button
                 onClick={() => {
                     setOpenModal(true);

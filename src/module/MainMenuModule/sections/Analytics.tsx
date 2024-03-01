@@ -34,7 +34,7 @@ export const Analytics: React.FC = () => {
         <section className="bg-white w-full min-h-[20rem] h-full shadow-sectionShadow rounded-sectionCorner p-8 text-section-title font-bold flex flex-col gap-3 items-center">
             <h2 className="text-left w-full">Financial Analysis</h2>
             {
-                data && 
+                (data && data.length > 0) ?
                 <div className='w-full h-full max-w-[20rem]'>
                     <Doughnut
                         className=""
@@ -54,6 +54,8 @@ export const Analytics: React.FC = () => {
                         }}
                     />
                 </div>
+                :
+                <p className="text-mainGray font-medium text-section-content">No charts to shows</p>
             }
 
         </section>

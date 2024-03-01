@@ -1,3 +1,4 @@
+import { sign } from "jsonwebtoken";
 import { prisma } from "../../../../../prisma/prisma";
 import { genSalt, hash } from "bcryptjs"
 
@@ -14,8 +15,10 @@ export async function POST(req: Request) {
 
         const hashedPassword = await hash(body.password, salt);
 
+       
+
         if (!user) {
-            await prisma.user.create(
+            const newUser = await prisma.user.create(
                 {
                     data: {
                         name: body.name,
@@ -25,10 +28,13 @@ export async function POST(req: Request) {
                 }
             )
 
+            const access_token = await sign(JSON.stringify(newUser), process.env.ACCESS_TOKEN as string);
+
             return new Response(JSON.stringify({
                 message: "User created succesfully",
                 status: "ok",
-                user: body.email
+                token: access_token,
+                user: newUser
             }))
         }
         else {
