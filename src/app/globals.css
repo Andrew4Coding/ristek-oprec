@@ -22,18 +22,15 @@
   border-radius: 30px;
 }
 
-/* Track (the area behind the scrollbar) */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; /* You can change this color */
+  background: #f1f1f1; 
 }
 
-/* Handle (the draggable part of the scrollbar) */
 ::-webkit-scrollbar-thumb {
   background: #576BEA; 
   border-radius: 30px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; /* You can change this color */
+  background: #555; 
 }

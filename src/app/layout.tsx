@@ -19,10 +19,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="icon"
+          href="/icon?<generated>"
+          type="image/<generated>"
+          sizes="<generated>"
+        />
+      </head>
       <body className={manrope.className}>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" />
         {children}
-        </body>
+      </body>
     </html>
   );
 }
