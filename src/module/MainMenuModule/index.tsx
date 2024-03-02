@@ -43,7 +43,6 @@ export const MainMenuModule: React.FC = () => {
             setIsLoading(false)
             setTransactionList(data.transactions.reverse());
             setTempFilter(data.transactions.reverse());
-
         }).catch(e => {
             console.log(e)
         })

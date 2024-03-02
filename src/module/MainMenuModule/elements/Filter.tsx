@@ -1,6 +1,7 @@
 'use client'
 import Image from "next/image"
 import { Dispatch, SetStateAction } from "react";
+import { filterType } from "../constant";
 
 export interface filterInterface {
     state: number,
@@ -15,7 +16,7 @@ export const Filter: React.FC<filterInterface> = function ({ state, setState }) 
                 Filter by
             </p>
             <div className="hidden xl:flex gap-5 overflow-x-auto pb-2 lg:pb-0">
-                {["Recent", "Category", "Price", "This Day", "This Week"].map((item, index) => {
+                {filterType.map((item, index) => {
                     return (
                         <button
                             key={index}
@@ -35,7 +36,7 @@ export const Filter: React.FC<filterInterface> = function ({ state, setState }) 
             }}
             className="p-2 outline-none text-[#576BEA]  text-sm xl:hidden"
             >
-                {["Recent", "Category", "Price", "This Day", "This Week"].map((item, index) => {
+                {filterType.map((item, index) => {
                         return (
                             <option
                                 value={index}

@@ -20,11 +20,11 @@ export const Navbar: React.FC = () => {
                     <div className="flex flex-col items-end">
                         <h2 className="font-bold text-section-title">
                             {
-                                typeof window == 'undefined' ? '' : localStorage.getItem('userName')
+                                typeof window != 'undefined' && localStorage.getItem('userName')
                             }
                         </h2>
                         <h2 className="font-medium text-section-subtitle">{
-                            typeof window == 'undefined' ? '' : localStorage.getItem('userEmail')
+                            typeof window != 'undefined' && localStorage.getItem('userEmail')
                         }</h2>
                     </div>
                     <Image 

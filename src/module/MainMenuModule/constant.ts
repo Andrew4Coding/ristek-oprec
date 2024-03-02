@@ -1,0 +1,2 @@
+export const filterType = ["Recent", "Category", "Price", "This Day", "This Week"];
+export const categories = ["Food", "Bills", "Laundry", "Education", "Transportation", "Recreational", "Health", "Technology", "Other"];

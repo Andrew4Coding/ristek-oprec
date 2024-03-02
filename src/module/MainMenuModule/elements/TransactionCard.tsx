@@ -64,7 +64,6 @@ export const TransactionCard: React.FC<{item: transactionData}> = ({
                     Rp {
                         thousandSeparator(item.amount.toString())
                     }
-                    
                     </h2>       
                 </div>
                 <h2 className={`hidden sm:flex font-bold text-section-subtitle text-right ${item.type == 'EXPENSE' ? 'text-mainRed' : 'text-mainGreen'}`}>

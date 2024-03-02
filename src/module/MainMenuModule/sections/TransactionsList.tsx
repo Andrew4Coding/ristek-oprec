@@ -7,6 +7,7 @@ import { SearchBar } from "../elements/SearchBar";
 import { Filter } from "../elements/Filter";
 import { UserTransactionsContext } from "..";
 import handleFilter from "@/components/util/sortMechanism";
+import { Section } from "@/components/Elements/Template/Section";
 
 export const TransactionList: React.FC = () => {
     const [tempFilter, setTempFilter] = useState<transactionData[] | null>(null);
@@ -47,7 +48,7 @@ export const TransactionList: React.FC = () => {
     }, [filterTypeIndex])
 
     return (
-        <section className="bg-white w-full lg:w-[70%] min-h-full shadow-sectionShadow rounded-sectionCorner p-8 text-section-title font-bold flex flex-col gap-3">
+        <Section className="min-h-full w-full lg:w-[70%]">
             <h3>Transactions History</h3>
             <SearchBar setState={setSearchFilter} state={tempFilter} />
             <Filter setState={setFilterTypeIndex} state={filterTypeIndex} />
@@ -69,6 +70,7 @@ export const TransactionList: React.FC = () => {
                     <LoadingSpin size="24" fill="#576BEA" />
                 }
             </div>
-        </section>
+
+        </Section>
     )
 }
