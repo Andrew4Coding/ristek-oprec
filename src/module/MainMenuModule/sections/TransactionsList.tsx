@@ -48,7 +48,7 @@ export const TransactionList: React.FC = () => {
     }, [filterTypeIndex])
 
     return (
-        <Section className="min-h-full w-full lg:w-[70%]">
+        <Section className="min-h-full w-full lg:w-[70%] gap-3">
             <h3>Transactions History</h3>
             <SearchBar setState={setSearchFilter} state={tempFilter} />
             <Filter setState={setFilterTypeIndex} state={filterTypeIndex} />

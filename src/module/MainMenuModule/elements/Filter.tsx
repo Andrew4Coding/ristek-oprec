@@ -34,7 +34,7 @@ export const Filter: React.FC<filterInterface> = function ({ state, setState }) 
             onChange={(e) => {
                 setState(parseInt(e.target.value));
             }}
-            className="p-2 outline-none text-[#576BEA]  text-sm xl:hidden"
+            className="p-2 outline-none text-[#576BEA] bg-none text-sm xl:hidden"
             >
                 {filterType.map((item, index) => {
                         return (
