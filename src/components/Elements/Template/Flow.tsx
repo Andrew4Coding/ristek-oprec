@@ -23,7 +23,7 @@ export const Flow: React.FC<{
     })
 
     return (
-        <Section className="num w-full">
+        <Section className="flex-grow">
             <h1 className="text-section-title">Total {type === "INCOME" ? "Income" : "Expense"}</h1>
             <div className="flex items-center gap-5">
                 <h3 className="text-section-title text-mainGray">RP</h3>

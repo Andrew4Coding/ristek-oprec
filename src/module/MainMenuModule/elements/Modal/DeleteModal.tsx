@@ -52,7 +52,7 @@ export const DeleteModal: React.FC<deleteModalInterface> = ({
                     onClick={() => {
                         setOpenModal(false);
                     }}
-                    className="w-full border-[0.5px] border-mainGray text-mainBlue py-3 rounded-xl font-bold duration-300 hover:scale-105">
+                    className="w-full border-[0.5px] border-mainGray text-mainGray py-3 rounded-xl font-bold duration-300 hover:scale-105">
                     Cancel
                 </button>
             </div>

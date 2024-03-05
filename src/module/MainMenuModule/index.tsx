@@ -60,11 +60,11 @@ export const MainMenuModule: React.FC = () => {
         <UserTransactionsContext.Provider
             value={{ isLoading, transactionList, tempFilter, setTempFilter }}
         >
-            <main className="px-5  py-10 lg:py-20 lg:pt-10 lg:px-20 w-full flex flex-col gap-5 ">
+            <main className="px-5 py-10 lg:py-20 lg:pt-10 lg:px-20 w-full flex flex-col gap-5 ">
                 <Navbar />
                 <div className="w-full flex flex-col lg:flex-row gap-5">
                     <div className="lg:flex-grow flex flex-col gap-5">
-                        <div className="flex-grow-0 lg:flex-grow flex flex-col sm:flex-row lg:flex-col gap-5">
+                        <div className="w-full lg:flex-grow flex flex-col md:flex-row lg:flex-col gap-5">
                             <Flow type="EXPENSE" />
                             <Flow type="INCOME" />
                         </div>

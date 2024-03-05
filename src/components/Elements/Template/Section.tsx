@@ -5,7 +5,7 @@ export const Section: React.FC<{
     className?: string,
 }> = ({ children, className }) => {
     return (
-        <section className={"bg-white shadow-sectionShadow rounded-sectionCorner p-8 text-section-title font-bold flex flex-col gap-2" + className}>
+        <section className={"bg-white shadow-sectionShadow rounded-sectionCorner p-8 text-section-title font-bold flex flex-col gap-2 " + className}>
             {children}
         </section>
     )

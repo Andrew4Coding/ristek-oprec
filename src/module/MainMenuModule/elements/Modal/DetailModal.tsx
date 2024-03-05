@@ -20,7 +20,7 @@ export const DetailModal: React.FC<editModalInterface> = ({
                 <div className="w-full flex gap-5 items-center justify-between">
                     <h1 className="font-bold text-section-title">{item.name}</h1>
                 </div>
-                <h2 className="text-price-title font-bold text-[#FB7373]">Rp{
+                <h2 className="text-price-title font-bold text-mainRed">Rp{
                     thousandSeparator(item.amount.toString())
                 }</h2>
                 <h2 className="text-sm text-mainGray">{date.toDateString()}</h2>
@@ -44,7 +44,7 @@ export const DetailModal: React.FC<editModalInterface> = ({
                             setOpenDeleteModal(true);
                             setOpenDetailModal(false);
                         }}
-                        className="border-[1px] border-mainGray px-5 py-3 w-full rounded-xl text-[#576BEA] font-bold text-section-content duration-300 hover:scale-105">
+                        className="border-[1px] border-mainGray px-5 py-3 w-full rounded-xl text-mainGray font-bold text-section-content duration-300 hover:scale-105">
                         Delete
                     </button>
                 </div>
