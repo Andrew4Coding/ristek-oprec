@@ -9,10 +9,10 @@ export const AuthenticationModule: React.FC = () => {
     return (
         <main className="w-full h-screen flex items-center justify-center p-10">
             {
-                isOpenSignIn ? 
-                <SignIn setState={setIsOpenSignIn}/> 
-                :
-                <SignUp setState={setIsOpenSignIn}/>
+                isOpenSignIn ?
+                    <SignIn setState={setIsOpenSignIn} />
+                    :
+                    <SignUp setState={setIsOpenSignIn} />
             }
         </main>
     )

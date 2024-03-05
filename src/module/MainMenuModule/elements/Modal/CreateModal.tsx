@@ -1,10 +1,10 @@
-import MyDatePicker from "@/components/Elements/Calendar/Calendar"; 
+import MyDatePicker from "@/components/Elements/Calendar/Calendar";
 
 import { Dispatch, SetStateAction, useState } from "react"
 import { LoadingSpin } from "@/components/Elements/Loader/LoadingSpin";
 import { transactionCategoriesEnum, transactionData } from "../../interface";
 
-export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolean>>}> = ({setOpenModal}) => {
+export const CreateModal: React.FC<{ setOpenModal: Dispatch<SetStateAction<boolean>> }> = ({ setOpenModal }) => {
     // State management
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [transactionData, setCreateTransaction] = useState<transactionData>({
@@ -23,7 +23,7 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
         setSelectedDate(date);
         setCreateTransaction(
             {
-                ... transactionData,
+                ...transactionData,
                 date: date
             }
         )
@@ -36,13 +36,13 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `${localStorage.getItem('sessionToken')}`
-              },
+            },
             body: JSON.stringify({
                 ...transactionData,
             })
         }).then(res => {
             return res.json();
-        }).then(data => {   
+        }).then(data => {
             if (data.status === 'ok') {
                 setDoneCreate("ok");
                 window.location.reload();
@@ -52,7 +52,7 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
                 setDoneCreate("error")
             }
             setOpenModal(false);
-                
+
         }).catch(e => {
             console.log(e)
         })
@@ -66,12 +66,12 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
             <h1 className="font-bold text-xl">Create Transaction</h1>
             <div className="flex justify-between gap-5">
                 <button
-                    onClick={() => { setCreateTransaction({...transactionData, type: "EXPENSE"}) }}
+                    onClick={() => { setCreateTransaction({ ...transactionData, type: "EXPENSE" }) }}
                     className={`w-full px-5 py-2 font-bold rounded-md text-sm ${transactionData.type == 'EXPENSE' ? 'bg-mainRed text-white' : 'text-[#C5C9D3]'}`}>
                     Expense
                 </button>
                 <button
-                    onClick={() => { setCreateTransaction({...transactionData, type: "INCOME"}) }}
+                    onClick={() => { setCreateTransaction({ ...transactionData, type: "INCOME" }) }}
                     className={`w-full px-5 py-2 font-bold rounded-md text-sm ${transactionData.type == 'INCOME' ? 'bg-mainGreen text-white' : 'text-[#C5C9D3]'}`}>
                     Income
                 </button>
@@ -95,20 +95,20 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
                     }}
                 />
                 <textarea
-                onChange={(e) => {
-                    setCreateTransaction({
-                        ...transactionData,
-                        description: e.target.value
-                    })
-                }}
+                    onChange={(e) => {
+                        setCreateTransaction({
+                            ...transactionData,
+                            description: e.target.value
+                        })
+                    }}
 
-                name="" id="" cols={30} rows={3} className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] py-3 px-5 font-medium "
-                placeholder="Description"
+                    name="" id="" cols={30} rows={3} className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] py-3 px-5 font-medium "
+                    placeholder="Description"
                 ></textarea>
             </form>
 
-            <MyDatePicker selectedDate={selectedDate} onChange={handleDateChange}/>
-            
+            <MyDatePicker selectedDate={selectedDate} onChange={handleDateChange} />
+
             <div className="flex gap-3 items-center font-semibold">
                 <p className="text-section-content">Category</p>
                 <select className="p-2 outline-none text-[#576BEA]  text-sm" onChange={(e) => {
@@ -130,8 +130,8 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
                 </select>
             </div>
             {
-                isLoading && 
-                <LoadingSpin size="20" fill="#A5DD9B" className=""/>
+                isLoading &&
+                <LoadingSpin size="20" fill="#A5DD9B" className="" />
             }
             {
                 isDoneCreate != '' &&
@@ -141,10 +141,10 @@ export const CreateModal: React.FC<{setOpenModal: Dispatch<SetStateAction<boolea
             }
 
             <button
-            onClick={() => {
-                CreateTransaction();
-            }}
-            className="w-full px-5 py-3 text-white text-section-content font-bold bg-[#576BEA] rounded-xl duration-200 hover:scale-105">
+                onClick={() => {
+                    CreateTransaction();
+                }}
+                className="w-full px-5 py-3 text-white text-section-content font-bold bg-[#576BEA] rounded-xl duration-200 hover:scale-105">
                 Create
             </button>
         </article>

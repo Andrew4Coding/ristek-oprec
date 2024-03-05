@@ -10,6 +10,9 @@ interface data {
     setSearchFilter: Dispatch<SetStateAction<transactionData[] | null>>
 
     filterTypeIndex: number
+
+    isAscending: boolean
+
 }
 
 export default function handleFilter({
@@ -17,7 +20,9 @@ export default function handleFilter({
     setTempFilter,
     searchFilter,
     setSearchFilter,
-    filterTypeIndex }: data) {
+    filterTypeIndex,
+
+    isAscending }: data) {
 
     let sorted;
     switch (filterTypeIndex) {
@@ -28,12 +33,6 @@ export default function handleFilter({
 
                 return dateB - dateA;
             })
-            if (sorted && searchFilter) {
-                setTempFilter(
-                    sorted
-                );
-                setSearchFilter(sorted)
-            }
             break;
 
         case 1:
@@ -41,40 +40,17 @@ export default function handleFilter({
                 const keyA = a.category;
                 const keyB = b.category;
 
-                if (keyA < keyB) return -1;
-                if (keyA > keyB) return 1;
-                return 0
+                return keyA.localeCompare(keyB);
             })
-            if (sorted && searchFilter) {
-                setTempFilter(
-                    sorted
-                );
-                setSearchFilter(sorted)
-            }
             break;
 
         case 2:
             sorted = transactionList?.slice().sort((a, b) => a.amount - b.amount).reverse();
-            if (sorted && searchFilter) {
-                setTempFilter(
-                    sorted
-                );
-                setSearchFilter(sorted)
-            }
             break;
 
         case 3:
             const todayDate = new Date();
-
             sorted = transactionList?.filter(item => new Date(item.date).toDateString() == todayDate.toDateString());
-
-
-            if (sorted && searchFilter) {
-                setTempFilter(
-                    sorted
-                );
-                setSearchFilter(sorted)
-            }
             break;
         case 4:
             const today = new Date();
@@ -92,15 +68,15 @@ export default function handleFilter({
 
                     return dateB - dateA;
                 })
-
-            if (sorted && searchFilter) {
-                setTempFilter(
-                    sorted
-                );
-                setSearchFilter(sorted)
-            }
             break;
         default:
             break;
+    }
+    sorted = isAscending ? sorted?.reverse() : sorted;
+    if (sorted && searchFilter) {
+        setTempFilter(
+            sorted
+        );
+        setSearchFilter(sorted)
     }
 }

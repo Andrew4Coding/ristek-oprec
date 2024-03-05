@@ -19,35 +19,41 @@ export const SignIn: React.FC<authModalInterface> = ({ setState }) => {
     const router = useRouter();
 
     function SignIn() {
-        setIsLoading(true);
-        fetch(`/api/authentication/signin`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                ...userSignData
-            })
-        }).then(res => {
-            return res.json();
-        }).then(data => {
-            setIsLoading(false);
-            if (data.message && data.status == "error") {
-                setErrorMessage(data.message);
-            }
-            else {
-                setErrorMessage('');
-                if (typeof window !== 'undefined'){
-                    localStorage.setItem('userName', data.user.name)
-                    localStorage.setItem('userEmail', userSignData.email)
-                    localStorage.setItem('userID', data.user.id)
-                    localStorage.setItem('sessionToken', data.token)
+        if (userSignData.email != '' && userSignData.email != '') {
+            setIsLoading(true);
+            fetch(`/api/authentication/signin`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    ...userSignData
+                })
+            }).then(res => {
+                return res.json();
+            }).then(data => {
+                setIsLoading(false);
+                if (data.message && data.status == "error") {
+                    setErrorMessage(data.message);
                 }
-                router.push('/');
-            }
-        }).catch(e => {
-            setErrorMessage(e)
-        })
+                else {
+                    setErrorMessage('');
+                    if (typeof window !== 'undefined') {
+                        localStorage.setItem('userName', data.user.name)
+                        localStorage.setItem('userEmail', userSignData.email)
+                        localStorage.setItem('userID', data.user.id)
+                        localStorage.setItem('sessionToken', data.token)
+                    }
+                    router.push('/');
+                }
+            }).catch(e => {
+                setErrorMessage(e)
+            });
+        }
+        else {
+            setErrorMessage('Email and Password should not be empty')
+        }
+
     }
 
     return (
@@ -75,6 +81,12 @@ export const SignIn: React.FC<authModalInterface> = ({ setState }) => {
                             password: e.target.value
                         })
                     }}
+
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            SignIn();
+                        }
+                    }}
                 />
                 <button className="duration-150 hover:scae" onClick={() => {
                     setIsShowPassword(!isShowPassword);
@@ -87,14 +99,7 @@ export const SignIn: React.FC<authModalInterface> = ({ setState }) => {
                 </button>
             </div>
             <button
-                onClick={() => {
-                    if (userSignData.email != '' && userSignData.email != '') {
-                        SignIn();
-                    }
-                    else {
-                        setErrorMessage('Email and Password should not be empty')
-                    }
-                }}
+                onClick={SignIn}
                 className="w-full rounded-md text-sm p-5 bg-[#576BEA] text-white font-bold duration-200 hover:scale-105 flex justify-center gap-5">
                 {
                     isLoading ?

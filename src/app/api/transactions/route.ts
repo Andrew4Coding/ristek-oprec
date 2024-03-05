@@ -12,20 +12,20 @@ export const GET = middleware(async (req: NextRequest, userId: string) => {
         })
 
         return new Response(JSON.stringify({
-            message: 'Successfully get the user transactions',
+            message: 'GET User Transactions Successfull',
             authorization: "Authorized!",
             status: 'ok',
             transactions: transactions,
             id: userId
         }))
 
-        
+
     }
-    catch (err) {
+    catch (error) {
         return new Response(JSON.stringify({
-            message: 'Failed!',
+            message: 'Failed while getting the user data!',
             status: 'error',
-            error: err
+            error: error
         }))
     }
 })
@@ -36,22 +36,21 @@ export const POST = middleware(async (req: NextRequest, userId: string) => {
 
         await prisma.transaction.create({
             data: {
-                ...body,                
+                ...body,
                 userId: parseInt(userId),
             }
         })
 
         return new NextResponse(JSON.stringify({
-            message: 'Successfully create transactions',
+            message: 'Create new transaction successfull!',
             status: 'ok',
-            body: body
         }))
     }
-    catch (e) {
+    catch (error) {
         return new NextResponse(JSON.stringify({
-            message: 'error',
+            message: 'Failed while posting new transaction',
             status: 'error',
-            error: e,
+            error: error,
         }))
     }
 })
@@ -75,16 +74,16 @@ export const DELETE = middleware(async (req: Request) => {
         const result = await Promise.race([deletePromise, timeoutPromise])
 
         return new NextResponse(JSON.stringify({
-            message: 'Successfully delete the transaction',
+            message: 'Delete transaction successfull!',
             status: 'ok',
             result: result,
         }))
     }
-    catch (e) {
+    catch (error) {
         return new NextResponse(JSON.stringify({
-            message: 'Something went wrong',
+            message: 'Failed while deleting transaction',
             status: 'error',
-            error: e
+            error: error
         }))
     }
 })
@@ -102,16 +101,16 @@ export const PUT = middleware(async (req: Request) => {
         })
 
         return new NextResponse(JSON.stringify({
-            message: 'Successfully edit transactions',
+            message: 'Edit transaction successfull!',
             status: 'ok',
             body: body
         }))
     }
-    catch (e) {
+    catch (error) {
         return new NextResponse(JSON.stringify({
-            message: 'error',
+            message: 'Failed while editing transaction',
             status: 'error',
-            error: e
+            error: error
         }))
     }
 })

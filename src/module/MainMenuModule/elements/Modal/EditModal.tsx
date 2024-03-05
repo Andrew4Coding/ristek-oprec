@@ -33,7 +33,7 @@ export const EditModal: React.FC<{
     // IsLoading State
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleDateChange = (date: Date ) => {
+    const handleDateChange = (date: Date) => {
         setSelectedDate(date);
         setEditTransaction(
             {
@@ -81,13 +81,13 @@ export const EditModal: React.FC<{
         <article className="p-8 flex flex-col gap-3 bg-white h-fit w-fit border-[#CCC] border-2 rounded-3xl">
             <h1 className="font-bold text-xl">Edit Transaction</h1>
             <div className="flex justify-between gap-5">
-            <button
-                    onClick={() => { setEditTransaction({...EditTransaction, type: "EXPENSE"}) }}
+                <button
+                    onClick={() => { setEditTransaction({ ...EditTransaction, type: "EXPENSE" }) }}
                     className={`w-full px-5 py-2 font-bold rounded-md text-sm ${EditTransaction.type == 'EXPENSE' ? 'bg-mainRed text-white' : 'text-[#C5C9D3]'}`}>
                     Expense
                 </button>
                 <button
-                    onClick={() => { setEditTransaction({...EditTransaction, type: "INCOME"}) }}
+                    onClick={() => { setEditTransaction({ ...EditTransaction, type: "INCOME" }) }}
                     className={`w-full px-5 py-2 font-bold rounded-md text-sm ${EditTransaction.type == 'INCOME' ? 'bg-mainGreen text-white' : 'text-[#C5C9D3]'}`}>
                     Income
                 </button>

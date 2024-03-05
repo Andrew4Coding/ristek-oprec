@@ -6,12 +6,12 @@ interface animateProps {
     className?: string,
 }
 
-export const CountUp = ({digit, className}: animateProps) => {
-    const { number }   = useSpring({
-        from: {number: 0},
+export const CountUp = ({ digit, className }: animateProps) => {
+    const { number } = useSpring({
+        from: { number: 0 },
         number: digit,
         delay: 100,
-        config: {mass: 1, tension: 20, friction: 5}
+        config: { mass: 1, tension: 20, friction: 5 }
     });
 
     return (

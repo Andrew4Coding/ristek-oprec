@@ -8,7 +8,7 @@ import { DeleteModal } from "./Modal/DeleteModal";
 import { thousandSeparator } from "@/components/util/thousandSeparator";
 import { EditModal } from "./Modal/EditModal";
 
-export const TransactionCard: React.FC<{item: transactionData}> = ({
+export const TransactionCard: React.FC<{ item: transactionData }> = ({
     item
 }) => {
 
@@ -18,28 +18,28 @@ export const TransactionCard: React.FC<{item: transactionData}> = ({
 
     const date = new Date(item.date);
     const dateString = date.toDateString();
-    
+
     return (
         <>
             {
                 openModal &&
                 <Modal setState={setOpenModal}>
-                    <DetailModal 
-                    setOpenDeleteModal={setOpenDeleteModal} 
-                    setOpenDetailModal={setOpenModal}
-                    setOpenEditModal={setOpenEditModal}
-                    item={item} 
+                    <DetailModal
+                        setOpenDeleteModal={setOpenDeleteModal}
+                        setOpenDetailModal={setOpenModal}
+                        setOpenEditModal={setOpenEditModal}
+                        item={item}
                     />
                 </Modal>
             }
             {
                 openDeleteModal && <Modal setState={setOpenDeleteModal}>
-                    <DeleteModal setOpenModal={setOpenDeleteModal} item={item}/>
+                    <DeleteModal setOpenModal={setOpenDeleteModal} item={item} />
                 </Modal>
             }
             {
                 openEditModal && <Modal setState={setOpenEditModal}>
-                    <EditModal item={item} setOpenModal={setOpenEditModal}/>
+                    <EditModal item={item} setOpenModal={setOpenEditModal} />
                 </Modal>
             }
             <div
@@ -49,22 +49,22 @@ export const TransactionCard: React.FC<{item: transactionData}> = ({
 
                 className="w-full bg-mainWhiteShade duration-500 hover:scale-[101%] hover:bg-[#F1F1F1] rounded-xl flex items-center p-5 lg:px-8 lg:py-5">
 
-                <div className="w-[3rem] h-[3rem] flex items-center justify-center bg-mainWhite rounded-full mr-[23%] sm:mr-[33%]">
-                    <Image src={`/${item.category.toLowerCase()}.svg`} alt="" width={22} height={22} className="w-auto h-auto"/>
+                <div className="min-w-[3rem] h-[3rem] flex items-center justify-center bg-mainWhite rounded-full mr-[23%] sm:mr-[33%]">
+                    <Image src={`/${item.category.toLowerCase()}.svg`} alt="" width={22} height={22} className="" />
                 </div>
 
-                <div className="flex flex-col mr-[20px] max-w-[8rem] sm:mr-auto">
-                    <h1 className="font-bold text-sm">{item.name}</h1>
-                    <h3 className="font-semibold text-[#95979D] text-sm hidden sm:flex">{dateString}</h3>
+                <div className="flex flex-col mr-[20px] flex-grow sm:max-w-[20rem] sm:mr-auto">
+                    <h1 className="font-bold text-sm line-clamp-1 overflow-ellipsis">{item.name}</h1>
+                    <h3 className="font-semibold text-[#95979D] text-xs sm:text-sm ">{dateString}</h3>
 
                     <h2 className={`sm:hidden font-bold text-xs ${item.type == 'EXPENSE' ? 'text-mainRed' : 'text-mainGreen'}`}>
-                    {
-                        item.type == 'EXPENSE' ? '-' : '+'
-                    }
-                    Rp {
-                        thousandSeparator(item.amount.toString())
-                    }
-                    </h2>       
+                        {
+                            item.type == 'EXPENSE' ? '-' : '+'
+                        }
+                        Rp {
+                            thousandSeparator(item.amount.toString())
+                        }
+                    </h2>
                 </div>
                 <h2 className={`hidden sm:flex font-bold text-section-subtitle text-right ${item.type == 'EXPENSE' ? 'text-mainRed' : 'text-mainGreen'}`}>
                     {
@@ -73,7 +73,7 @@ export const TransactionCard: React.FC<{item: transactionData}> = ({
                     Rp {
                         thousandSeparator(item.amount.toString())
                     }
-                    
+
                 </h2>
             </div>
 

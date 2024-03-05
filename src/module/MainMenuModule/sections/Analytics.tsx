@@ -36,25 +36,25 @@ export const Analytics: React.FC = () => {
             <h2 className="text-left w-full">Financial Analysis</h2>
             {
                 (data && data.length > 0) ?
-                <Doughnut
-                    className="w-full h-full max-w-[20rem]"
-                    title="Categories"
-                    data={{
-                        labels: categories,
-                        datasets: [
-                            {
-                                label: "Expense",
-                                data: categories.map(item => checkSumCategory("EXPENSE", item.toUpperCase()))
-                            },
-                            {
-                                label: "Income",
-                                data: categories.map(item => checkSumCategory("INCOME", item.toUpperCase()))
-                            }
-                        ]
-                    }}
-                />
-                :
-                <p className="text-mainGray font-medium text-section-content">No charts to shows</p>
+                    <Doughnut
+                        className="w-full h-full max-w-[20rem]"
+                        title="Categories"
+                        data={{
+                            labels: categories,
+                            datasets: [
+                                {
+                                    label: "Expense",
+                                    data: categories.map(item => checkSumCategory("EXPENSE", item.toUpperCase()))
+                                },
+                                {
+                                    label: "Income",
+                                    data: categories.map(item => checkSumCategory("INCOME", item.toUpperCase()))
+                                }
+                            ]
+                        }}
+                    />
+                    :
+                    <p className="text-mainGray font-medium text-section-content">No charts to shows</p>
             }
         </Section>
     )

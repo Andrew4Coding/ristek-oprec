@@ -25,7 +25,7 @@ export const SearchBar: React.FC<searchBar> = function ({
                 </Modal>}
             <div className="w-full rounded-md text-sm bg-mainWhiteShade p-8 py-5 gap-5 font-medium flex">
                 <button className="duration-150 hover:scae" onClick={() => {
-                } }>
+                }}>
                     <Image src={'/search.svg'} alt="" width={24} height={24} />
                 </button>
 
@@ -35,12 +35,12 @@ export const SearchBar: React.FC<searchBar> = function ({
                             const sorted = state.filter(item => item.name.toLowerCase().includes(e.target.value.toLowerCase()));
                             setState(sorted);
                         }
-                    } } />
+                    }} />
             </div>
             <button
                 onClick={() => {
                     setOpenModal(true);
-                } }
+                }}
                 className="w-[5rem] rounded-sectionCorner flex justify-center items-center bg-[#576BEA] text-white font-bold duration-150 hover:scale-105">
                 <Image src={'/add.svg'} alt="add" width={24} height={24} className="" />
             </button>

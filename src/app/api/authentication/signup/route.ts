@@ -15,8 +15,6 @@ export async function POST(req: Request) {
 
         const hashedPassword = await hash(body.password, salt);
 
-       
-
         if (!user) {
             const newUser = await prisma.user.create(
                 {
@@ -31,7 +29,7 @@ export async function POST(req: Request) {
             const access_token = await sign(JSON.stringify(newUser), process.env.ACCESS_TOKEN as string);
 
             return new Response(JSON.stringify({
-                message: "User created succesfully",
+                message: "Sign Up Sucessfull",
                 status: "ok",
                 token: access_token,
                 user: newUser
@@ -39,14 +37,14 @@ export async function POST(req: Request) {
         }
         else {
             return new Response(JSON.stringify({
-                message: "User already Exist",
+                message: "User already registered! Please use Sign In instead.",
                 status: "error",
             }))
         }
     }
     catch (error) {
         return new Response(JSON.stringify({
-            message: "Failed to signup",
+            message: "Failed while Signing Up",
             status: "error",
             error: error
         }))

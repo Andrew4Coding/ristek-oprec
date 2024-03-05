@@ -1,17 +1,20 @@
-'use client'
-import { TransactionCard } from "../elements/TransactionCard"
-import { useContext, useEffect, useState } from "react"
-import { transactionData } from "../interface"
+"use client";
+import { TransactionCard } from "../elements/TransactionCard";
+import { useContext, useEffect, useState } from "react";
+import { transactionData } from "../interface";
 import { LoadingSpin } from "@/components/Elements/Loader/LoadingSpin";
 import { SearchBar } from "../elements/SearchBar";
 import { Filter } from "../elements/Filter";
 import { UserTransactionsContext } from "..";
-import handleFilter from "@/components/util/sortMechanism";
+import handleFilter from "@/components/util/filter";
 import { Section } from "@/components/Elements/Template/Section";
 
 export const TransactionList: React.FC = () => {
     const [tempFilter, setTempFilter] = useState<transactionData[] | null>(null);
-    const [searchFilter, setSearchFilter] = useState<transactionData[] | null>(null);
+    const [searchFilter, setSearchFilter] = useState<transactionData[] | null>(
+        null,
+    );
+    const [isAscending, setIsAscending] = useState<boolean>(true)
 
     const [filterTypeIndex, setFilterTypeIndex] = useState(0);
 
@@ -29,11 +32,13 @@ export const TransactionList: React.FC = () => {
             if (sorted) {
                 setTempFilter(sorted);
                 setSearchFilter(sorted);
+                setIsAscending(false);
             }
         }
-    })
+    });
 
     useEffect(() => {
+        // console.log(isAscending)
         if (transactionList) {
             handleFilter({
                 transactionList,
@@ -41,36 +46,32 @@ export const TransactionList: React.FC = () => {
                 setTempFilter,
                 searchFilter,
                 setSearchFilter,
-                filterTypeIndex
-            })
+                filterTypeIndex,
+                isAscending
+            });
         }
-
-    }, [filterTypeIndex])
+    }, [filterTypeIndex, isAscending]);
 
     return (
         <Section className="min-h-full w-full lg:w-[70%] gap-3">
             <h3>Transactions History</h3>
             <SearchBar setState={setSearchFilter} state={tempFilter} />
-            <Filter setState={setFilterTypeIndex} state={filterTypeIndex} />
-            <div className="overflow-y-scroll overflow-x-hidden box-border max-h-[33rem] flex flex-col gap-3 items-center">
-                {
-                    !transactionList || transactionList.length == 0 &&
-                    <p className="text-mainGray font-medium text-section-content">No transactions, click + to add transactions</p>
-                }
-                {
-                    transactionList ?
-                    (
-                        searchFilter?.map((item) => {
-                            return (
-                                <TransactionCard item={item} key={item.id} />
-                            )
-                        })
-                    )
-                    :
+            <Filter setFilterIndex={setFilterTypeIndex} setIsAscending={setIsAscending} />
+            <div className="overflow-y-scroll overflow-x-hidden box-border max-h-[33rem] rounded-sectionCorner flex flex-col gap-3 items-center">
+                {!transactionList ||
+                    (transactionList.length == 0 && (
+                        <p className="text-mainGray font-medium text-section-content">
+                            No transactions, click + to add transactions
+                        </p>
+                    ))}
+                {transactionList ? (
+                    searchFilter?.map((item) => {
+                        return <TransactionCard item={item} key={item.id} />;
+                    })
+                ) : (
                     <LoadingSpin size="24" fill="#576BEA" />
-                }
+                )}
             </div>
-
         </Section>
-    )
-}
+    );
+};

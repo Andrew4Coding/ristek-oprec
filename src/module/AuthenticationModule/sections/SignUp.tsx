@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { authModalInterface, authModalSignInterface, signUpInterface } from "../interface";
+import { authModalInterface, signUpInterface } from "../interface";
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -15,33 +15,44 @@ export const SignUp: React.FC<authModalInterface> = ({ setState }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    
+
     function SignUp() {
-        setIsLoading(true);
-        fetch(`api/authentication/signup`, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(userSignData)
-        }).then(res => {
-            return res.json();
-        }).then(data => {
-            setIsLoading(false)
-            if (data.message && data.status == "error") {
-                setErrorMessage(data.message);
-            }
-            else {
-                setErrorMessage('');
-                if (typeof window !== 'undefined'){
-                    localStorage.setItem('userName', data.user.name)
-                    localStorage.setItem('userEmail', userSignData.email)
-                    localStorage.setItem('userID', data.user.id)
-                    localStorage.setItem('sessionToken', data.token)
+        if (confirmPassword != userSignData.password) {
+            setErrorMessage('Passwords not matched')
+        }
+        else if (userSignData.name == '' || confirmPassword == '' || userSignData.email == '' || userSignData.password == '') {
+            setErrorMessage('Fields can not be empty')
+        }
+        else if (!userSignData.email.endsWith("@gmail.com")) {
+            setErrorMessage('Not a valid email')
+        }
+        else {
+            setIsLoading(true);
+            fetch(`api/authentication/signup`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userSignData)
+            }).then(res => {
+                return res.json();
+            }).then(data => {
+                setIsLoading(false)
+                if (data.message && data.status == "error") {
+                    setErrorMessage(data.message);
                 }
-                router.push('/');
-            }
-        })
+                else {
+                    setErrorMessage('');
+                    if (typeof window !== 'undefined') {
+                        localStorage.setItem('userName', data.user.name)
+                        localStorage.setItem('userEmail', userSignData.email)
+                        localStorage.setItem('userID', data.user.id)
+                        localStorage.setItem('sessionToken', data.token)
+                    }
+                    router.push('/');
+                }
+            })
+        }
     }
 
 
@@ -60,8 +71,8 @@ export const SignUp: React.FC<authModalInterface> = ({ setState }) => {
                     )
                 }}
             />
-            
-            <input type="text" className="w-full rounded-md text-sm outline-none  bg-[#F6F6F6] p-5 font-medium" placeholder="Email"
+
+            <input type="text" className="w-full rounded-md text-sm outline-none bg-[#F6F6F6] p-5 font-medium" placeholder="Email"
                 onChange={(e) => {
                     setUserSignData(
                         {
@@ -116,24 +127,11 @@ export const SignUp: React.FC<authModalInterface> = ({ setState }) => {
                 <p className="text-xs font-bold text-mainRed">* {errorMessage}</p>
             }
             <button
-                onClick={() => {
-                    if (confirmPassword != userSignData.password) {
-                        setErrorMessage('Passwords not matched')
-                    }
-                    else if (userSignData.name == '' || confirmPassword == ''|| userSignData.email == '' || userSignData.password == ''){
-                        setErrorMessage('Fields can not be empty')
-                    }
-                    else if (!userSignData.email.endsWith("@gmail.com")){
-                        setErrorMessage('Not a valid email')
-                    }
-                    else {
-                        SignUp();
-                    }
-                }}
+                onClick={SignUp}
                 className="w-full rounded-md text-sm p-5 bg-[#576BEA] text-white font-bold duration-200 hover:scale-105 flex justify-center gap-5">
                 {
                     isLoading &&
-                        <Image src={'/loading.svg'} alt="" width={20} height={20} className="animate-spin" />
+                    <Image src={'/loading.svg'} alt="" width={20} height={20} className="animate-spin" />
                 }
                 <span>
                     Create
@@ -141,9 +139,7 @@ export const SignUp: React.FC<authModalInterface> = ({ setState }) => {
             </button>
 
             <button
-                onClick={() => {
-                    setState(true);
-                }}
+                onClick={() => { setState(true) }}
                 className="text-xs font-medium text-center underline underline-offset-4 duration-200 hover:scale-105 hover:font-bold">
                 Have an Account? Sign in here
             </button>
