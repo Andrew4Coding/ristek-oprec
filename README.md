@@ -5,8 +5,8 @@ Made for RISTEK FASILKOM UI Website Development SIG Open Recruitment
 ## Table of contents
 1. [About Maniy](#about)
 2. [Installation](#installation)
-3. [Features](#features-and-usages)
-4. [Tech Stack Used](#tech-stacks-used)
+3. [Tech Stack Used](#tech-stacks-used)
+4. [Features and Usages](#features-and-usages)
 
 ## About
 A simple financial management website designed just for your Maniy, where you can Create, Read, Edit, and Delete transactions. You can also see your balance and your categories analytics.
