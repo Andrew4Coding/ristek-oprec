@@ -38,7 +38,6 @@ export const TransactionList: React.FC = () => {
     });
 
     useEffect(() => {
-        // console.log(isAscending)
         if (transactionList) {
             handleFilter({
                 transactionList,

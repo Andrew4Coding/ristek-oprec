@@ -25,14 +25,10 @@ export const Analytics: React.FC = () => {
         ).map(item => item.amount);
 
         const sum = toReturn?.reduce((acc, current) => acc + current, 0)
-
         return sum;
     }
-
-
-
     return (
-        <Section className="flex items-center justify-center">
+        <Section className="flex items-center justify-center flex-grow max-w-[100%]">
             <h2 className="text-left w-full">Financial Analysis</h2>
             {
                 (data && data.length > 0) ?

@@ -18,12 +18,11 @@ export const Flow: React.FC<{
             if (sum) {
                 setNominal(sum);
             }
-
         }
     })
 
     return (
-        <Section className="flex-grow">
+        <Section className="w-full">
             <h1 className="text-section-title">Total {type === "INCOME" ? "Income" : "Expense"}</h1>
             <div className="flex items-center gap-5">
                 <h3 className="text-section-title text-mainGray">RP</h3>

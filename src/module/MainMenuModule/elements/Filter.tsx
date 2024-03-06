@@ -29,8 +29,8 @@ export const Filter: React.FC<filterInterface> = function ({ setFilterIndex, set
                             <option
                                 value={index}
                                 key={index}
-                                className={`rounded-md duration-200 px-5 py-3 text-sm font-semibold`}>
-                                <span className="">{item}</span>
+                                className={`rounded-md duration-200 text-sm font-semibold`}>
+                                <span>{item}</span>
                             </option>
                         );
                     })}
